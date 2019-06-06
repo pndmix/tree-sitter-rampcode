@@ -1,0 +1,82 @@
+========
+Comments
+========
+
+-- This is a comment.
+/*
+This is a comment.
+*/
+
+---
+(program
+  (comment) (comment))
+
+
+========
+Signal
+========
+
+$v1
+
+---
+(program
+  (expression_statement (signal)))
+
+
+========
+Set-Statement
+========
+
+set 1.25;
+set 1;
+
+---
+(program
+  (set_statement (float))
+  (set_statement (integer)))
+
+
+========
+Rec-Statement
+========
+
+rec 1;
+
+---
+(program 
+  (rec_statement (integer)))
+
+
+========
+Expression-Statement
+========
+
+sin($v1)*sin($v1/1000)*(1-$v1%1000/1000);
+sin($v1)*pow(1-$v1%1000/1000, $v1/1000%8*2+1);
+sin($v1)*(sin($v1/1000%8)>0);
+
+---
+(program
+  (expression_statement
+    (binary_operator
+      (binary_operator
+        (call_expression (function_name) (arguments (signal)))
+        (call_expression (function_name) (arguments (binary_operator (signal) (integer)))))
+      (parenthesized
+        (binary_operator (integer) (binary_operator (binary_operator (signal) (integer)) (integer))))))
+  (expression_statement
+    (binary_operator
+      (call_expression (function_name) (arguments (signal)))
+      (call_expression (function_name) (arguments
+        (binary_operator (integer) (binary_operator (binary_operator (signal) (integer)) (integer)))
+        (binary_operator
+          (binary_operator (binary_operator (binary_operator (signal) (integer)) (integer)) (integer))
+          (integer))))))
+  (expression_statement
+    (binary_operator 
+      (call_expression (function_name) (arguments (signal)))
+      (parenthesized
+        (comparison_operator
+          (call_expression (function_name) (arguments (binary_operator (binary_operator (signal) (integer)) (integer))))
+          (integer)))))
+)

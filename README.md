@@ -1,2 +1,2 @@
 # tree-sitter-rampcode
-Rampcode grammar for tree-sitter
+Rampcode grammar for [tree-sitter](https://github.com/tree-sitter/tree-sitter)

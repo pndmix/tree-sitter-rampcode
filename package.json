@@ -6,8 +6,11 @@
   "repository": "https://github.com/pndmix/tree-sitter-rampcode",
   "author": "Reo Matsumoto",
   "license": "MIT",
+  "dependencies": {
+    "nan": "^2.12.1"
+  },
   "devDependencies": {
-    "tree-sitter-cli": "^0.13.5"
+    "tree-sitter-cli": "^0.15.3"
   },
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",

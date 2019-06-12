@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-rampcode",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Rampcode grammar for tree-sitter",
   "main": "index.js",
   "repository": "https://github.com/pndmix/tree-sitter-rampcode",
@@ -10,7 +10,7 @@
     "nan": "^2.12.1"
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.15.3"
+    "tree-sitter-cli": "^0.13.5"
   },
   "scripts": {
     "build": "tree-sitter generate && node-gyp build",

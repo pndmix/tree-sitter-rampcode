@@ -646,5 +646,7 @@
   "externals": [],
   "inline": [
     "_statement"
-  ]
+  ],
+  "supertypes": []
 }
+

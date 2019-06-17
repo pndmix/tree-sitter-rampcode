@@ -17,6 +17,7 @@ matrix:
 branches:
   only:
     - master
+    - /^v?[0-9\\.]+/
 
 deploy:
   provider: script

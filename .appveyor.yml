@@ -20,6 +20,7 @@ build: off
 branches:
   only:
   - master
+  - /^v?[0-9\\.]+/
 
 test_script:
   - npm run test

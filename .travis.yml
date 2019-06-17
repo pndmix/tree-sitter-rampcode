@@ -1,7 +1,26 @@
 language: node_js
 
-node_js: 10
+node_js:
+  - 10
+
+env:
+  global:
+    - secure: JD0OuKLCbCCWtUr9CCfZkUsnhCg0F7ri0Gr/xIkqjK0t/H8HdSHq/huyQJpbkON8TqCzoan4pJXv1afkd+IaJg1/9DLhyYt6TsdlgAI3rZKe2mwghZ9a2siwggm6k/wrj4crNlh01DwJErb5QXuvpdH2S7yzCxd2W3GAxwRAs8cOcTUSaTvC6Z8JZrywy4Vx9YyOhsJI+1UDJCfJLxVwchAXZ/vhC7VV1aXz6Ua2cF+bBMZNVsTG8lz5cMM5aUTtD6DFucSu/7JB+OOxmX4qbCVR+gKAkglnA9dy4zBPAi+RPhdKNeZmz3Mw/Ov/7aiurJr4TPQNFMDUrR73g+szdkepNFAVF51MaIHQswBmXE1f/xpQ5s0XcRok7GbGOdGc1VcR0tMiB1eiKmO36f1ToZbj9DLKToLa/+YccM/Qazh/rMCd3WpkKapD1Z8CndAyeUxShAyI8TMGRQdgFxPFW25RvMvYCDz27km1f9JhYVlG7v9JIabon6Vu25lVIdeVJS3HZKfc+QeJsg2wrUPwEQyhuoEA5cAOPBq+hFMADi/jn1tcfwMmn+f1NqzTj3BFYItP4g9QAy+hynH+7rBW5xiojhmIOHpDFZfQ6pY5qb29x92taqbxNhzEH2xXMb2d01awRbb6iJWlH7IH1mCx3ma0qNhV1ucdTMzjKaJ/w9k=
+
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode9.2
+    - os: linux
+      env: CXX=clang++
 
 branches:
   only:
     - master
+
+deploy:
+  provider: script
+  script: npm run prebuild && npm run prebuild:upload -u ${PREBUILD_UPLOAD}
+  skip_cleanup: true
+  on:
+    tags: true

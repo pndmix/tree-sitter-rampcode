@@ -34,7 +34,13 @@ module.exports = grammar({
       choice(
         $.set_statement,
         $.rec_statement,
-        $.expression_statement
+        $.expression_statement,
+        $.hz_statement,
+        $.amp_statement,
+        $.reset_statement,
+        $.ramp_statement,
+        $.left_channel_statement,
+        $.right_channel_statement,
       ),
       optional(';'),
     ),
@@ -48,6 +54,40 @@ module.exports = grammar({
       'rec',
       $.integer
     ),
+
+    hz_statement: $ => seq(
+      'hz',
+      $.reserved_word,
+      choice($.integer, $.float)
+    ),
+
+    amp_statement: $ => seq(
+      'amp',
+      $.reserved_word,
+      choice($.integer, $.float)
+    ),
+
+    reset_statement: $ => 'reset',
+
+    ramp_statement: $ => seq(
+      'ramp',
+      $.reserved_word,
+      $._expressions
+    ),
+
+    left_channel_statement: $ => seq(
+      'l',
+      $.reserved_word,
+      $._expressions
+    ),
+
+    right_channel_statement: $ => seq(
+      'r',
+      $.reserved_word,
+      $._expressions
+    ),
+
+    reserved_word: $ => /@|:/,
 
     expression_statement: $ => $._expressions,
 

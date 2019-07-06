@@ -80,3 +80,113 @@ sin($v1)*(sin($v1/1000%8)>0);
           (call_expression (function_name) (arguments (binary_operator (binary_operator (signal) (integer)) (integer))))
           (integer)))))
 )
+
+
+========
+Hz-Statement
+========
+
+hz @ 0.125;
+hz : 0.125;
+
+---
+(program 
+  (hz_statement (reserved_word) (float))
+  (hz_statement (reserved_word) (float)))
+
+
+========
+Amp-Statement
+========
+
+amp @ 320000;
+amp : 320000;
+
+---
+(program 
+  (amp_statement (reserved_word) (integer))
+  (amp_statement (reserved_word) (integer)))
+
+
+========
+Reset-Statement
+========
+
+reset;
+
+---
+(program 
+  (reset_statement))
+
+
+========
+Ramp-Statement
+========
+
+ramp @ $v1;
+ramp : $v1;
+
+---
+(program 
+  (ramp_statement (reserved_word) (signal))
+  (ramp_statement (reserved_word) (signal)))
+
+
+========
+Left-Channel-Statement
+========
+
+l @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
+l : $v1%24000 / ($v1%4000/8) % 2 - 0.5;
+
+---
+(program
+  (left_channel_statement
+    (reserved_word)
+    (binary_operator
+      (binary_operator
+        (binary_operator
+          (binary_operator (signal) (integer))
+          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
+        (integer))
+      (float)))
+  (left_channel_statement
+    (reserved_word)
+    (binary_operator
+      (binary_operator
+        (binary_operator
+          (binary_operator (signal) (integer))
+          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
+        (integer))
+      (float)))
+)
+
+
+========
+Right-Channel-Statement
+========
+
+r @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
+r : $v1%24000 / ($v1%4000/8) % 2 - 0.5;
+
+---
+(program
+  (right_channel_statement
+    (reserved_word)
+    (binary_operator
+      (binary_operator
+        (binary_operator
+          (binary_operator (signal) (integer))
+          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
+        (integer))
+      (float)))
+  (right_channel_statement
+    (reserved_word)
+    (binary_operator
+      (binary_operator
+        (binary_operator
+          (binary_operator (signal) (integer))
+          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
+        (integer))
+      (float)))
+)

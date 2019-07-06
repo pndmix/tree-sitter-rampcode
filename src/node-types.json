@@ -1,5 +1,10 @@
 [
   {
+    "type": "amp_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "arguments",
     "named": true,
     "fields": {}
@@ -30,6 +35,16 @@
     "fields": {}
   },
   {
+    "type": "hz_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "left_channel_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parenthesized",
     "named": true,
     "fields": {}
@@ -40,7 +55,17 @@
     "fields": {}
   },
   {
+    "type": "ramp_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "rec_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "right_channel_statement",
     "named": true,
     "fields": {}
   },
@@ -65,6 +90,34 @@
   {
     "type": "rec",
     "named": false
+  },
+  {
+    "type": "hz",
+    "named": false
+  },
+  {
+    "type": "amp",
+    "named": false
+  },
+  {
+    "type": "reset_statement",
+    "named": true
+  },
+  {
+    "type": "ramp",
+    "named": false
+  },
+  {
+    "type": "l",
+    "named": false
+  },
+  {
+    "type": "r",
+    "named": false
+  },
+  {
+    "type": "reserved_word",
+    "named": true
   },
   {
     "type": "&&",

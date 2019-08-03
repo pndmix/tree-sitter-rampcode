@@ -24,61 +24,43 @@ $v1
 
 
 ========
-Set-Statement
+Macro
 ========
 
-set 1.25;
-set 1;
+$PI
 
 ---
 (program
-  (set_statement (float))
-  (set_statement (integer)))
+  (expression_statement (call_expression (macro_name))))
 
 
 ========
-Rec-Statement
+Define-Statement
 ========
 
-rec 1;
+define PI 3.141592;
 
 ---
-(program 
-  (rec_statement (integer)))
+(program
+  (define_statement (name) (float)))
 
 
 ========
 Expression-Statement
 ========
 
-sin($v1)*sin($v1/1000)*(1-$v1%1000/1000);
-sin($v1)*pow(1-$v1%1000/1000, $v1/1000%8*2+1);
-sin($v1)*(sin($v1/1000%8)>0);
+sin($v1);
+sin($v1 * 2 * 3.1415) * 0.25;
 
 ---
 (program
   (expression_statement
-    (binary_operator
-      (binary_operator
-        (call_expression (function_name) (arguments (signal)))
-        (call_expression (function_name) (arguments (binary_operator (signal) (integer)))))
-      (parenthesized
-        (binary_operator (integer) (binary_operator (binary_operator (signal) (integer)) (integer))))))
+    (call_expression (function_name) (arguments (signal))))
   (expression_statement
     (binary_operator
-      (call_expression (function_name) (arguments (signal)))
       (call_expression (function_name) (arguments
-        (binary_operator (integer) (binary_operator (binary_operator (signal) (integer)) (integer)))
-        (binary_operator
-          (binary_operator (binary_operator (binary_operator (signal) (integer)) (integer)) (integer))
-          (integer))))))
-  (expression_statement
-    (binary_operator 
-      (call_expression (function_name) (arguments (signal)))
-      (parenthesized
-        (comparison_operator
-          (call_expression (function_name) (arguments (binary_operator (binary_operator (signal) (integer)) (integer))))
-          (integer)))))
+        (binary_operator (binary_operator (signal) (integer)) (float))))
+      (float)))
 )
 
 
@@ -133,45 +115,16 @@ ramp : $v1;
 
 
 ========
-Left-Channel-Statement
+Channel-Statement
 ========
 
 l @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
-l : $v1%24000 / ($v1%4000/8) % 2 - 0.5;
-
----
-(program
-  (left_channel_statement
-    (reserved_word)
-    (binary_operator
-      (binary_operator
-        (binary_operator
-          (binary_operator (signal) (integer))
-          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
-        (integer))
-      (float)))
-  (left_channel_statement
-    (reserved_word)
-    (binary_operator
-      (binary_operator
-        (binary_operator
-          (binary_operator (signal) (integer))
-          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
-        (integer))
-      (float)))
-)
-
-
-========
-Right-Channel-Statement
-========
-
 r @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
-r : $v1%24000 / ($v1%4000/8) % 2 - 0.5;
 
 ---
 (program
-  (right_channel_statement
+  (channel_statement
+    (left)
     (reserved_word)
     (binary_operator
       (binary_operator
@@ -180,7 +133,8 @@ r : $v1%24000 / ($v1%4000/8) % 2 - 0.5;
           (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
         (integer))
       (float)))
-  (right_channel_statement
+  (channel_statement
+    (right)
     (reserved_word)
     (binary_operator
       (binary_operator

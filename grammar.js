@@ -32,27 +32,21 @@ module.exports = grammar({
 
     _statement: $ => seq(
       choice(
-        $.set_statement,
-        $.rec_statement,
         $.expression_statement,
         $.hz_statement,
         $.amp_statement,
         $.reset_statement,
         $.ramp_statement,
-        $.left_channel_statement,
-        $.right_channel_statement,
+        $.channel_statement,
+        $.define_statement
       ),
       optional(';'),
     ),
 
-    set_statement: $ => seq(
-      'set',
-      choice($.integer, $.float)
-    ),
-
-    rec_statement: $ => seq(
-      'rec',
-      $.integer
+    define_statement: $ => seq(
+      'define',
+      alias(/\w+/, $.name),
+      $._expressions
     ),
 
     hz_statement: $ => seq(
@@ -75,14 +69,11 @@ module.exports = grammar({
       $._expressions
     ),
 
-    left_channel_statement: $ => seq(
-      'l',
-      $.reserved_word,
-      $._expressions
-    ),
-
-    right_channel_statement: $ => seq(
-      'r',
+    channel_statement: $ => seq(
+      choice(
+        alias('l', $.left),
+        alias('r', $.right)
+      ),
       $.reserved_word,
       $._expressions
     ),
@@ -92,7 +83,6 @@ module.exports = grammar({
     expression_statement: $ => $._expressions,
 
     _expressions: $ => choice(
-      alias($.identifier, $.plain),
       $.integer,
       $.float,
       $.signal,
@@ -149,9 +139,15 @@ module.exports = grammar({
       ')'
     ),
 
-    call_expression: $ => seq(
-      alias($.identifier, $.function_name),
-      $.arguments
+    call_expression: $ => choice(
+      seq(
+        $.function_name,
+        $.arguments
+      ),
+      seq(
+        $.macro_name,
+        optional($.arguments)
+      )
     ),
 
     arguments: $ => seq(
@@ -167,6 +163,10 @@ module.exports = grammar({
     float: $ => /(([1-9][0-9]*\.[0-9]*)|(0?\.[0-9]+))/,
 
     signal: $ => '$v1',
+
+    function_name: $ => /(if|int|rint|float|min|max|abs|floor|ceil|fmod|pow|sqrt|cbrt|exp|expm1|log|log1p|log10|fact|sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh)/,
+
+    macro_name: $ => /\$\w+/,
 
     comment: $ => token(choice(
       seq('--', /.*/),

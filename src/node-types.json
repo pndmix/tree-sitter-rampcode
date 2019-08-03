@@ -25,7 +25,17 @@
     "fields": {}
   },
   {
+    "type": "channel_statement",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "comparison_operator",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "define_statement",
     "named": true,
     "fields": {}
   },
@@ -36,11 +46,6 @@
   },
   {
     "type": "hz_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "left_channel_statement",
     "named": true,
     "fields": {}
   },
@@ -60,21 +65,6 @@
     "fields": {}
   },
   {
-    "type": "rec_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "right_channel_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "set_statement",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "unary_operator",
     "named": true,
     "fields": {}
@@ -84,11 +74,7 @@
     "named": false
   },
   {
-    "type": "set",
-    "named": false
-  },
-  {
-    "type": "rec",
+    "type": "define",
     "named": false
   },
   {
@@ -225,6 +211,14 @@
   },
   {
     "type": "signal",
+    "named": true
+  },
+  {
+    "type": "function_name",
+    "named": true
+  },
+  {
+    "type": "macro_name",
     "named": true
   },
   {

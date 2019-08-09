@@ -27,11 +27,10 @@ module.exports = grammar({
 
   rules: {
     program: $ => repeat(
-      $._statement
+      seq($._statement, ';')
     ),
 
-    _statement: $ => seq(
-      choice(
+    _statement: $ => choice(
         $.expression_statement,
         $.hz_statement,
         $.amp_statement,
@@ -39,14 +38,6 @@ module.exports = grammar({
         $.ramp_statement,
         $.channel_statement,
         $.define_statement
-      ),
-      optional(';'),
-    ),
-
-    define_statement: $ => seq(
-      'define',
-      alias(/\w+/, $.name),
-      $._expressions
     ),
 
     hz_statement: $ => seq(
@@ -78,7 +69,20 @@ module.exports = grammar({
       $._expressions
     ),
 
-    reserved_word: $ => /@|:/,
+    define_statement: $ => seq(
+      'define',
+      choice($.macro_variable, $.macro_function),
+      $.expression_statement
+    ),
+
+    macro_variable: $ => alias($.variable_name, $.name),
+
+    macro_function: $ => seq(
+      alias($.variable_name, $.name),
+      alias($._macro_function_arguments, $.arguments)
+    ),
+
+    _macro_function_arguments: $ => args(',', repeat1($.variable_name)),
 
     expression_statement: $ => $._expressions,
 
@@ -91,7 +95,8 @@ module.exports = grammar({
       $.binary_operator,
       $.unary_operator,
       $.comparison_operator,
-      $.call_expression
+      $._call_expressions,
+      $.variable_name
     ),
 
     boolean_operator: $ => choice(
@@ -139,24 +144,30 @@ module.exports = grammar({
       ')'
     ),
 
-    call_expression: $ => choice(
-      seq(
-        $.function_name,
-        $.arguments
-      ),
-      seq(
-        $.macro_name,
-        optional($.arguments)
-      )
+    _call_expressions: $ => choice(
+      $.call_function,
+      $.call_macro
     ),
 
-    arguments: $ => seq(
-      token.immediate('('),
-      sep(choice(','), repeat1($._expressions)),
-      ')'
+    call_function: $ => seq(
+      alias($.function_name, $.name),
+      $.arguments
     ),
 
-    identifier: $ => /[a-z]+/,
+    call_macro: $ => choice(
+      alias($._call_macro_variable, $.variable),
+      alias($._call_macro_function, $.function)
+    ),
+
+    _call_macro_variable: $ => /\$[a-zA-Z_]+\w*/,
+
+    _call_macro_function: $ => seq(alias($._call_macro_variable, $.name), $.arguments),
+
+    arguments: $ => args(',', repeat1($._expressions)),
+
+    reserved_word: $ => /@|:/,
+
+    identifier: $ => /[a-zA-Z_]+/,
 
     integer: $ => /[0-9]+/,
 
@@ -166,7 +177,7 @@ module.exports = grammar({
 
     function_name: $ => /(if|int|rint|float|min|max|abs|floor|ceil|fmod|pow|sqrt|cbrt|exp|expm1|log|log1p|log10|fact|sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh)/,
 
-    macro_name: $ => /\$\w+/,
+    variable_name: $ => /[a-zA-Z_]+\w*/,
 
     comment: $ => token(choice(
       seq('--', /.*/),
@@ -182,10 +193,14 @@ module.exports = grammar({
   }
 });
 
-function sep (separator, rule) {
+function sep(separator, rule) {
   return optional(sep1(separator, rule))
 }
 
-function sep1 (separator, rule) {
+function sep1(separator, rule) {
   return seq(rule, repeat(seq(separator, rule)))
+}
+
+function args(separator, rule) {
+  return seq(token.immediate('('), sep(separator, rule), ')')
 }

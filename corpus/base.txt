@@ -13,55 +13,19 @@ This is a comment.
 
 
 ========
-Signal
-========
-
-$v1
-
----
-(program
-  (expression_statement (signal)))
-
-
-========
-Macro
-========
-
-$PI
-
----
-(program
-  (expression_statement (call_expression (macro_name))))
-
-
-========
-Define-Statement
-========
-
-define PI 3.141592;
-
----
-(program
-  (define_statement (name) (float)))
-
-
-========
 Expression-Statement
 ========
 
-sin($v1);
-sin($v1 * 2 * 3.1415) * 0.25;
+abs(1 - (2 * $v1));
 
 ---
 (program
   (expression_statement
-    (call_expression (function_name) (arguments (signal))))
-  (expression_statement
-    (binary_operator
-      (call_expression (function_name) (arguments
-        (binary_operator (binary_operator (signal) (integer)) (float))))
-      (float)))
-)
+    (call_function
+      (name)
+      (arguments
+        (binary_operator (integer) (parenthesized (binary_operator (integer) (signal)))))))
+) 
 
 
 ========
@@ -143,4 +107,34 @@ r @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
           (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
         (integer))
       (float)))
+)
+
+
+========
+Define-Variable-Statement
+========
+
+define TWO_PI 2 * 3.14159265358979323846;
+
+---
+(program
+  (define_statement
+    (macro_variable (name))
+    (expression_statement (binary_operator (integer) (float)))))
+
+
+========
+Define-Function-Statement
+========
+
+define osc(freq, time) sin($TWO_PI * freq * time);
+
+---
+(program
+  (define_statement
+    (macro_function (name) (arguments (variable_name) (variable_name)))
+    (expression_statement
+      (call_function
+        (name)
+        (arguments (binary_operator (binary_operator (call_macro (variable)) (variable_name)) (variable_name))))))
 )

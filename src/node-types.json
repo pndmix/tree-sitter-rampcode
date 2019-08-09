@@ -20,7 +20,12 @@
     "fields": {}
   },
   {
-    "type": "call_expression",
+    "type": "call_function",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "call_macro",
     "named": true,
     "fields": {}
   },
@@ -50,6 +55,16 @@
     "fields": {}
   },
   {
+    "type": "macro_function",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "macro_variable",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "parenthesized",
     "named": true,
     "fields": {}
@@ -71,10 +86,6 @@
   },
   {
     "type": ";",
-    "named": false
-  },
-  {
-    "type": "define",
     "named": false
   },
   {
@@ -102,8 +113,20 @@
     "named": false
   },
   {
-    "type": "reserved_word",
-    "named": true
+    "type": "define",
+    "named": false
+  },
+  {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
   },
   {
     "type": "&&",
@@ -186,16 +209,8 @@
     "named": false
   },
   {
-    "type": ")",
-    "named": false
-  },
-  {
-    "type": "(",
-    "named": false
-  },
-  {
-    "type": ",",
-    "named": false
+    "type": "reserved_word",
+    "named": true
   },
   {
     "type": "identifier",
@@ -218,7 +233,7 @@
     "named": true
   },
   {
-    "type": "macro_name",
+    "type": "variable_name",
     "named": true
   },
   {

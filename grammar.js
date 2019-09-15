@@ -31,13 +31,13 @@ module.exports = grammar({
     ),
 
     _statement: $ => choice(
-        $.expression_statement,
-        $.hz_statement,
-        $.amp_statement,
-        $.reset_statement,
-        $.ramp_statement,
-        $.channel_statement,
-        $.define_statement
+      $.expression_statement,
+      $.hz_statement,
+      $.amp_statement,
+      $.reset_statement,
+      $.ramp_statement,
+      $.channel_statement,
+      $.define_statement
     ),
 
     hz_statement: $ => seq(
@@ -61,10 +61,7 @@ module.exports = grammar({
     ),
 
     channel_statement: $ => seq(
-      choice(
-        alias('l', $.left),
-        alias('r', $.right)
-      ),
+      choice(alias('l', $.left), alias('r', $.right)),
       $.reserved_word,
       $._expressions
     ),
@@ -75,14 +72,14 @@ module.exports = grammar({
       $.expression_statement
     ),
 
-    macro_variable: $ => alias($.variable_name, $.name),
+    macro_variable: $ => $.variable_name,
 
     macro_function: $ => seq(
-      alias($.variable_name, $.name),
-      alias($._macro_function_arguments, $.arguments)
+      alias($.variable_name, $.function_name),
+      alias($._macro_arguments, $.arguments)
     ),
 
-    _macro_function_arguments: $ => args(',', repeat1($.variable_name)),
+    _macro_arguments: $ => args(',', repeat1($.variable_name)),
 
     expression_statement: $ => $._expressions,
 
@@ -96,7 +93,6 @@ module.exports = grammar({
       $.unary_operator,
       $.comparison_operator,
       $._call_expressions,
-      $.variable_name
     ),
 
     boolean_operator: $ => choice(
@@ -121,49 +117,33 @@ module.exports = grammar({
       prec(PREC.unary, seq('~', $._expressions))
     ),
 
-    comparison_operator: $ => prec.left(PREC.compare,
+    comparison_operator: $ => prec.left(
+      PREC.compare,
       seq(
         $._expressions,
-        repeat1(seq(choice(
-              '<',
-              '<=',
-              '==',
-              '!=',
-              '>=',
-              '>',
-            ),
-            $._expressions
-          )
-        )
+        repeat1(seq(choice('<', '<=', '==', '!=', '>=', '>'), $._expressions))
       )
     ),
 
-    parenthesized: $ => seq(
-      '(',
-      $._expressions,
-      ')'
-    ),
+    parenthesized: $ => seq('(', $._expressions, ')'),
 
     _call_expressions: $ => choice(
       $.call_function,
-      $.call_macro
+      alias($.macro_variable, $.call_macro_variable),
+      $.call_macro_function
     ),
 
     call_function: $ => seq(
-      alias($.function_name, $.name),
-      $.arguments
+      $.function_name,
+      alias($._call_arguments, $.arguments)
     ),
 
-    call_macro: $ => choice(
-      alias($._call_macro_variable, $.variable),
-      alias($._call_macro_function, $.function)
+    call_macro_function: $ => seq(
+      alias($.variable_name, $.function_name),
+      alias($._call_arguments, $.arguments)
     ),
 
-    _call_macro_variable: $ => /\$[a-zA-Z_]+\w*/,
-
-    _call_macro_function: $ => seq(alias($._call_macro_variable, $.name), $.arguments),
-
-    arguments: $ => args(',', repeat1($._expressions)),
+    _call_arguments: $ => args(',', repeat1($._expressions)),
 
     reserved_word: $ => /@|:/,
 
@@ -179,17 +159,12 @@ module.exports = grammar({
 
     variable_name: $ => /[a-zA-Z_]+\w*/,
 
-    comment: $ => token(choice(
-      seq('--', /.*/),
-      seq(
-        '/*',
-        repeat(choice(
-          /[^*]/,
-          /\*[^/]/,
-        )),
-        '*/'
+    comment: $ => token(
+      choice(
+        seq('--', /.*/),
+        seq('/*', repeat(choice(/[^*]/, /\*[^/]/)), '*/')
       )
-    )),
+    ),
   }
 });
 

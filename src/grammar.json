@@ -187,13 +187,8 @@
       ]
     },
     "macro_variable": {
-      "type": "ALIAS",
-      "content": {
-        "type": "SYMBOL",
-        "name": "variable_name"
-      },
-      "named": true,
-      "value": "name"
+      "type": "SYMBOL",
+      "name": "variable_name"
     },
     "macro_function": {
       "type": "SEQ",
@@ -205,20 +200,20 @@
             "name": "variable_name"
           },
           "named": true,
-          "value": "name"
+          "value": "function_name"
         },
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_macro_function_arguments"
+            "name": "_macro_arguments"
           },
           "named": true,
           "value": "arguments"
         }
       ]
     },
-    "_macro_function_arguments": {
+    "_macro_arguments": {
       "type": "SEQ",
       "members": [
         {
@@ -315,10 +310,6 @@
         {
           "type": "SYMBOL",
           "name": "_call_expressions"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "variable_name"
         }
       ]
     },
@@ -685,8 +676,17 @@
           "name": "call_function"
         },
         {
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "macro_variable"
+          },
+          "named": true,
+          "value": "call_macro_variable"
+        },
+        {
           "type": "SYMBOL",
-          "name": "call_macro"
+          "name": "call_macro_function"
         }
       ]
     },
@@ -694,66 +694,44 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "function_name"
-          },
-          "named": true,
-          "value": "name"
-        },
-        {
           "type": "SYMBOL",
-          "name": "arguments"
-        }
-      ]
-    },
-    "call_macro": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_call_macro_variable"
-          },
-          "named": true,
-          "value": "variable"
+          "name": "function_name"
         },
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_call_macro_function"
+            "name": "_call_arguments"
           },
           "named": true,
-          "value": "function"
+          "value": "arguments"
         }
       ]
     },
-    "_call_macro_variable": {
-      "type": "PATTERN",
-      "value": "\\$[a-zA-Z_]+\\w*"
-    },
-    "_call_macro_function": {
+    "call_macro_function": {
       "type": "SEQ",
       "members": [
         {
           "type": "ALIAS",
           "content": {
             "type": "SYMBOL",
-            "name": "_call_macro_variable"
+            "name": "variable_name"
           },
           "named": true,
-          "value": "name"
+          "value": "function_name"
         },
         {
-          "type": "SYMBOL",
-          "name": "arguments"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_call_arguments"
+          },
+          "named": true,
+          "value": "arguments"
         }
       ]
     },
-    "arguments": {
+    "_call_arguments": {
       "type": "SEQ",
       "members": [
         {

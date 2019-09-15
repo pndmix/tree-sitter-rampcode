@@ -23,61 +23,6 @@
     }
   },
   {
-    "type": "arguments",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
-          "type": "call_function",
-          "named": true
-        },
-        {
-          "type": "call_macro",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
-          "type": "signal",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
-          "named": true
-        },
-        {
-          "type": "variable_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "binary_operator",
     "named": true,
     "fields": {},
@@ -98,7 +43,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -123,10 +72,6 @@
         },
         {
           "type": "unary_operator",
-          "named": true
-        },
-        {
-          "type": "variable_name",
           "named": true
         }
       ]
@@ -153,7 +98,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -179,10 +128,6 @@
         {
           "type": "unary_operator",
           "named": true
-        },
-        {
-          "type": "variable_name",
-          "named": true
         }
       ]
     }
@@ -196,18 +141,58 @@
       "required": false,
       "types": [
         {
-          "type": "arguments",
+          "type": "binary_operator",
           "named": true
         },
         {
-          "type": "name",
+          "type": "boolean_operator",
+          "named": true
+        },
+        {
+          "type": "call_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "parenthesized",
+          "named": true
+        },
+        {
+          "type": "signal",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "call_macro",
+    "type": "call_macro_function",
     "named": true,
     "fields": {},
     "children": {
@@ -215,15 +200,51 @@
       "required": false,
       "types": [
         {
-          "type": "arguments",
+          "type": "binary_operator",
           "named": true
         },
         {
-          "type": "name",
+          "type": "boolean_operator",
           "named": true
         },
         {
-          "type": "variable",
+          "type": "call_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
+          "named": true
+        },
+        {
+          "type": "comparison_operator",
+          "named": true
+        },
+        {
+          "type": "float",
+          "named": true
+        },
+        {
+          "type": "function_name",
+          "named": true
+        },
+        {
+          "type": "integer",
+          "named": true
+        },
+        {
+          "type": "parenthesized",
+          "named": true
+        },
+        {
+          "type": "signal",
+          "named": true
+        },
+        {
+          "type": "unary_operator",
           "named": true
         }
       ]
@@ -250,7 +271,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -280,10 +305,6 @@
         {
           "type": "unary_operator",
           "named": true
-        },
-        {
-          "type": "variable_name",
-          "named": true
         }
       ]
     }
@@ -309,7 +330,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -334,10 +359,6 @@
         },
         {
           "type": "unary_operator",
-          "named": true
-        },
-        {
-          "type": "variable_name",
           "named": true
         }
       ]
@@ -387,7 +408,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -412,10 +437,6 @@
         },
         {
           "type": "unary_operator",
-          "named": true
-        },
-        {
-          "type": "variable_name",
           "named": true
         }
       ]
@@ -453,7 +474,7 @@
       "required": false,
       "types": [
         {
-          "type": "name",
+          "type": "function_name",
           "named": true
         },
         {
@@ -472,7 +493,7 @@
       "required": false,
       "types": [
         {
-          "type": "name",
+          "type": "variable_name",
           "named": true
         }
       ]
@@ -499,7 +520,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -524,10 +549,6 @@
         },
         {
           "type": "unary_operator",
-          "named": true
-        },
-        {
-          "type": "variable_name",
           "named": true
         }
       ]
@@ -593,7 +614,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -623,10 +648,6 @@
         {
           "type": "unary_operator",
           "named": true
-        },
-        {
-          "type": "variable_name",
-          "named": true
         }
       ]
     }
@@ -652,7 +673,11 @@
           "named": true
         },
         {
-          "type": "call_macro",
+          "type": "call_macro_function",
+          "named": true
+        },
+        {
+          "type": "call_macro_variable",
           "named": true
         },
         {
@@ -677,10 +702,6 @@
         },
         {
           "type": "unary_operator",
-          "named": true
-        },
-        {
-          "type": "variable_name",
           "named": true
         }
       ]

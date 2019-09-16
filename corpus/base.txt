@@ -22,7 +22,7 @@ abs(1 - (2 * $v1));
 (program
   (expression_statement
     (call_function
-      (name)
+      (function_name)
       (arguments
         (binary_operator (integer) (parenthesized (binary_operator (integer) (signal)))))))
 ) 
@@ -119,7 +119,7 @@ define TWO_PI 2 * 3.14159265358979323846;
 ---
 (program
   (define_statement
-    (macro_variable (name))
+    (macro_variable (variable_name))
     (expression_statement (binary_operator (integer) (float)))))
 
 
@@ -127,14 +127,17 @@ define TWO_PI 2 * 3.14159265358979323846;
 Define-Function-Statement
 ========
 
-define osc(freq, time) sin($TWO_PI * freq * time);
+define osc(freq, time) sin(TWO_PI * freq * time);
 
 ---
 (program
   (define_statement
-    (macro_function (name) (arguments (variable_name) (variable_name)))
+    (macro_function (function_name) (arguments (variable_name) (variable_name))) 
     (expression_statement
       (call_function
-        (name)
-        (arguments (binary_operator (binary_operator (call_macro (variable)) (variable_name)) (variable_name))))))
+        (function_name)
+        (arguments
+          (binary_operator (binary_operator (call_macro_variable (variable_name)) (call_macro_variable (variable_name))) (call_macro_variable (variable_name)))
+        )))
+  )
 )

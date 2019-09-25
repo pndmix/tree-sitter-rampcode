@@ -23,7 +23,7 @@ module.exports = grammar({
     $._statement
   ],
 
-  word: $ => $.identifier,
+  word: $ => $.variable_name,
 
   rules: {
     program: $ => repeat(
@@ -147,8 +147,6 @@ module.exports = grammar({
 
     reserved_word: $ => /@|:/,
 
-    identifier: $ => /[a-zA-Z_]+/,
-
     integer: $ => /[0-9]+/,
 
     float: $ => /(([1-9][0-9]*\.[0-9]*)|(0?\.[0-9]+))/,
@@ -157,7 +155,7 @@ module.exports = grammar({
 
     function_name: $ => /(if|int|rint|float|min|max|abs|floor|ceil|fmod|pow|sqrt|cbrt|exp|expm1|log|log1p|log10|fact|sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh)/,
 
-    variable_name: $ => /[a-zA-Z_]+\w*/,
+    variable_name: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
 
     comment: $ => token(
       choice(

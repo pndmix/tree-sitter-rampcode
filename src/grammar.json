@@ -1,6 +1,6 @@
 {
   "name": "rampcode",
-  "word": "identifier",
+  "word": "variable_name",
   "rules": {
     "program": {
       "type": "REPEAT",
@@ -790,10 +790,6 @@
       "type": "PATTERN",
       "value": "@|:"
     },
-    "identifier": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_]+"
-    },
     "integer": {
       "type": "PATTERN",
       "value": "[0-9]+"
@@ -812,7 +808,7 @@
     },
     "variable_name": {
       "type": "PATTERN",
-      "value": "[a-zA-Z_]+\\w*"
+      "value": "[a-zA-Z_][a-zA-Z_0-9]*"
     },
     "comment": {
       "type": "TOKEN",

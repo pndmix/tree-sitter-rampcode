@@ -23,7 +23,7 @@ module.exports = grammar({
     $._statement
   ],
 
-  word: $ => $.variable_name,
+  word: $ => $.identifier,
 
   rules: {
     program: $ => repeat(
@@ -68,18 +68,21 @@ module.exports = grammar({
 
     define_statement: $ => seq(
       'define',
-      choice($.macro_variable, $.macro_function),
+      choice($.macro_variable, $.macro_function)
+    ),
+
+    macro_variable: $ => seq(
+      alias($.identifier, $.variable_name),
+      choice($.integer, $.float)
+    ),
+
+    macro_function: $ => seq(
+      alias($.identifier, $.function_name),
+      alias($._macro_arguments, $.arguments),
       $.expression_statement
     ),
 
-    macro_variable: $ => $.variable_name,
-
-    macro_function: $ => seq(
-      alias($.variable_name, $.function_name),
-      alias($._macro_arguments, $.arguments)
-    ),
-
-    _macro_arguments: $ => args(',', repeat1($.variable_name)),
+    _macro_arguments: $ => args(',', repeat1(alias($.identifier, $.variable_name))),
 
     expression_statement: $ => $._expressions,
 
@@ -129,21 +132,21 @@ module.exports = grammar({
 
     _call_expressions: $ => choice(
       $.call_function,
-      alias($.macro_variable, $.call_macro_variable),
+      alias($.identifier, $.call_macro_variable),
       $.call_macro_function
     ),
 
     call_function: $ => seq(
       $.function_name,
-      alias($._call_arguments, $.arguments)
+      $.arguments
     ),
 
     call_macro_function: $ => seq(
-      alias($.variable_name, $.function_name),
-      alias($._call_arguments, $.arguments)
+      alias($.identifier, $.function_name),
+      $.arguments
     ),
 
-    _call_arguments: $ => args(',', repeat1($._expressions)),
+    arguments: $ => args(',', repeat1($._expressions)),
 
     reserved_word: $ => /@|:/,
 
@@ -155,7 +158,7 @@ module.exports = grammar({
 
     function_name: $ => /(if|int|rint|float|min|max|abs|floor|ceil|fmod|pow|sqrt|cbrt|exp|expm1|log|log1p|log10|fact|sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh)/,
 
-    variable_name: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
+    identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
 
     comment: $ => token(
       choice(

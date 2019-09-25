@@ -114,30 +114,25 @@ r @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
 Define-Variable-Statement
 ========
 
-define TWO_PI 2 * 3.14159265358979323846;
+define PI 3.14159265358979323846;
 
 ---
 (program
   (define_statement
-    (macro_variable (variable_name))
-    (expression_statement (binary_operator (integer) (float)))))
+    (macro_variable (variable_name) (float))))
 
 
 ========
 Define-Function-Statement
 ========
 
-define osc(freq, time) sin(TWO_PI * freq * time);
+define osc(freq, time) sin(2 * PI * freq * time);
 
 ---
 (program
   (define_statement
-    (macro_function (function_name) (arguments (variable_name) (variable_name))) 
+    (macro_function (function_name) (arguments (variable_name) (variable_name))
     (expression_statement
-      (call_function
-        (function_name)
+      (call_function (function_name)
         (arguments
-          (binary_operator (binary_operator (call_macro_variable (variable_name)) (call_macro_variable (variable_name))) (call_macro_variable (variable_name)))
-        )))
-  )
-)
+          (binary_operator (binary_operator (binary_operator (integer) (call_macro_variable)) (call_macro_variable)) (call_macro_variable))))))))

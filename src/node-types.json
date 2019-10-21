@@ -1,28 +1,5 @@
 [
   {
-    "type": "amp_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "reserved_word",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "arguments",
     "named": true,
     "fields": {},
@@ -43,11 +20,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -98,11 +75,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -153,11 +130,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -200,7 +177,22 @@
           "named": true
         },
         {
-          "type": "function_name",
+          "type": "name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "call_macro",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "name",
           "named": true
         }
       ]
@@ -219,66 +211,7 @@
           "named": true
         },
         {
-          "type": "function_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "channel_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
-          "type": "call_function",
-          "named": true
-        },
-        {
-          "type": "call_macro_function",
-          "named": true
-        },
-        {
-          "type": "call_macro_variable",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
-          "type": "reserved_word",
-          "named": true
-        },
-        {
-          "type": "signal",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
+          "type": "name",
           "named": true
         }
       ]
@@ -305,11 +238,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -340,7 +273,7 @@
     }
   },
   {
-    "type": "define_statement",
+    "type": "cps_statement",
     "named": true,
     "fields": {},
     "children": {
@@ -348,11 +281,11 @@
       "required": false,
       "types": [
         {
-          "type": "macro_function",
+          "type": "float",
           "named": true
         },
         {
-          "type": "macro_variable",
+          "type": "integer",
           "named": true
         }
       ]
@@ -379,11 +312,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -414,7 +347,7 @@
     }
   },
   {
-    "type": "hz_statement",
+    "type": "macro_arguments",
     "named": true,
     "fields": {},
     "children": {
@@ -422,22 +355,14 @@
       "required": false,
       "types": [
         {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "reserved_word",
+          "type": "name",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "macro_function",
+    "type": "macro_function_statement",
     "named": true,
     "fields": {},
     "children": {
@@ -449,18 +374,18 @@
           "named": true
         },
         {
-          "type": "function_name",
+          "type": "macro_arguments",
           "named": true
         },
         {
-          "type": "variable_name",
+          "type": "name",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "macro_variable",
+    "type": "macro_statement",
     "named": true,
     "fields": {},
     "children": {
@@ -468,15 +393,11 @@
       "required": false,
       "types": [
         {
-          "type": "float",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "variable_name",
+          "type": "name",
           "named": true
         }
       ]
@@ -503,11 +424,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -546,31 +467,19 @@
       "required": false,
       "types": [
         {
-          "type": "amp_statement",
+          "type": "cps_statement",
           "named": true
         },
         {
-          "type": "channel_statement",
+          "type": "macro_function_statement",
           "named": true
         },
         {
-          "type": "define_statement",
-          "named": true
-        },
-        {
-          "type": "expression_statement",
-          "named": true
-        },
-        {
-          "type": "hz_statement",
+          "type": "macro_statement",
           "named": true
         },
         {
           "type": "ramp_statement",
-          "named": true
-        },
-        {
-          "type": "reset_statement",
           "named": true
         }
       ]
@@ -585,51 +494,7 @@
       "required": false,
       "types": [
         {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
-          "type": "call_function",
-          "named": true
-        },
-        {
-          "type": "call_macro_function",
-          "named": true
-        },
-        {
-          "type": "call_macro_variable",
-          "named": true
-        },
-        {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
-          "type": "float",
-          "named": true
-        },
-        {
-          "type": "integer",
-          "named": true
-        },
-        {
-          "type": "parenthesized",
-          "named": true
-        },
-        {
-          "type": "reserved_word",
-          "named": true
-        },
-        {
-          "type": "signal",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
+          "type": "expression_statement",
           "named": true
         }
       ]
@@ -656,11 +521,11 @@
           "named": true
         },
         {
-          "type": "call_macro_function",
+          "type": "call_macro",
           "named": true
         },
         {
-          "type": "call_macro_variable",
+          "type": "call_macro_function",
           "named": true
         },
         {
@@ -691,43 +556,27 @@
     }
   },
   {
-    "type": ";",
+    "type": "cps",
     "named": false
   },
   {
-    "type": "hz",
+    "type": ":",
     "named": false
   },
   {
-    "type": "amp",
+    "type": "ramp1",
     "named": false
   },
   {
-    "type": "reset_statement",
-    "named": true
-  },
-  {
-    "type": "ramp",
+    "type": "ramp2",
     "named": false
   },
   {
-    "type": "l",
-    "named": false
-  },
-  {
-    "type": "r",
-    "named": false
-  },
-  {
-    "type": "define",
+    "type": ":=",
     "named": false
   },
   {
     "type": "(",
-    "named": false
-  },
-  {
-    "type": ",",
     "named": false
   },
   {
@@ -787,6 +636,10 @@
     "named": false
   },
   {
+    "type": "!",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -815,8 +668,12 @@
     "named": false
   },
   {
-    "type": "reserved_word",
-    "named": true
+    "type": ",",
+    "named": false
+  },
+  {
+    "type": "\\,",
+    "named": false
   },
   {
     "type": "integer",

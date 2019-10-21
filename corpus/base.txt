@@ -1,5 +1,5 @@
 ========
-Comments
+comments
 ========
 
 -- This is a comment.
@@ -13,126 +13,70 @@ This is a comment.
 
 
 ========
-Expression-Statement
+cps-statement
 ========
 
-abs(1 - (2 * $v1));
-
----
-(program
-  (expression_statement
-    (call_function
-      (function_name)
-      (arguments
-        (binary_operator (integer) (parenthesized (binary_operator (integer) (signal)))))))
-) 
-
-
-========
-Hz-Statement
-========
-
-hz @ 0.125;
-hz : 0.125;
+cps: 0.125
+cps: 1
 
 ---
 (program 
-  (hz_statement (reserved_word) (float))
-  (hz_statement (reserved_word) (float)))
+  (cps_statement (float))
+  (cps_statement (integer))) 
 
 
 ========
-Amp-Statement
+ramp-statement
 ========
 
-amp @ 320000;
-amp : 320000;
-
----
-(program 
-  (amp_statement (reserved_word) (integer))
-  (amp_statement (reserved_word) (integer)))
-
-
-========
-Reset-Statement
-========
-
-reset;
-
----
-(program 
-  (reset_statement))
-
-
-========
-Ramp-Statement
-========
-
-ramp @ $v1;
-ramp : $v1;
-
----
-(program 
-  (ramp_statement (reserved_word) (signal))
-  (ramp_statement (reserved_word) (signal)))
-
-
-========
-Channel-Statement
-========
-
-l @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
-r @ $v1%24000 / ($v1%4000/8) % 2 - 0.5;
+ramp1: $v1*8000*4
+ramp2: sin(1000 / ($v1%4000)*2)
 
 ---
 (program
-  (channel_statement
-    (left)
-    (reserved_word)
-    (binary_operator
-      (binary_operator
-        (binary_operator
-          (binary_operator (signal) (integer))
-          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
-        (integer))
-      (float)))
-  (channel_statement
-    (right)
-    (reserved_word)
-    (binary_operator
-      (binary_operator
-        (binary_operator
-          (binary_operator (signal) (integer))
-          (parenthesized (binary_operator (binary_operator (signal) (integer)) (integer))))
-        (integer))
-      (float)))
-)
-
-
-========
-Define-Variable-Statement
-========
-
-define PI 3.14159265358979323846;
-
----
-(program
-  (define_statement
-    (macro_variable (variable_name) (float))))
-
-
-========
-Define-Function-Statement
-========
-
-define osc(freq, time) sin(2 * PI * freq * time);
-
----
-(program
-  (define_statement
-    (macro_function (function_name) (arguments (variable_name) (variable_name))
+  (ramp_statement
+    (ramp1)
+    (expression_statement (binary_operator (binary_operator (signal) (integer)) (integer))))
+  (ramp_statement
+    (ramp2)
     (expression_statement
-      (call_function (function_name)
-        (arguments
-          (binary_operator (binary_operator (binary_operator (integer) (call_macro_variable)) (call_macro_variable)) (call_macro_variable))))))))
+      (call_function
+        (name)
+        (arguments (binary_operator (binary_operator (integer) (parenthesized (binary_operator (signal) (integer)))) (integer))))))) 
+
+
+========
+macro-statement
+========
+
+PI := 3.14159265
+pulse := if($v1<0.5, 1, 0)
+
+---
+(program
+  (macro_statement
+    (name)
+    (expression_statement (float)))
+  (macro_statement
+    (name)
+    (expression_statement
+      (call_function
+        (name)
+        (arguments (comparison_operator (signal) (float)) (integer) (integer)))))) 
+
+
+========
+macro-function-statement
+========
+
+osc(freq, time) := sin(2 * PI * freq * time)
+
+---
+(program
+  (macro_function_statement
+    (name)
+    (macro_arguments (name) (name))
+    (expression_statement
+      (call_function
+        (name)
+        (arguments (binary_operator (binary_operator (binary_operator (integer) (call_macro (name))) (call_macro (name))) (call_macro (name))))))))

@@ -26,63 +26,44 @@ module.exports = grammar({
   word: $ => $.identifier,
 
   rules: {
-    program: $ => repeat(
-      seq($._statement, ';')
-    ),
+    program: $ => repeat($._statement),
 
     _statement: $ => choice(
-      $.expression_statement,
-      $.hz_statement,
-      $.amp_statement,
-      $.reset_statement,
+      $.cps_statement,
       $.ramp_statement,
-      $.channel_statement,
-      $.define_statement
+      $.macro_statement,
+      $.macro_function_statement,
     ),
 
-    hz_statement: $ => seq(
-      'hz',
-      $.reserved_word,
+    cps_statement: $ => seq(
+      'cps',
+      ':',
       choice($.integer, $.float)
     ),
-
-    amp_statement: $ => seq(
-      'amp',
-      $.reserved_word,
-      choice($.integer, $.float)
-    ),
-
-    reset_statement: $ => 'reset',
 
     ramp_statement: $ => seq(
-      'ramp',
-      $.reserved_word,
-      $._expressions
-    ),
-
-    channel_statement: $ => seq(
-      choice(alias('l', $.left), alias('r', $.right)),
-      $.reserved_word,
-      $._expressions
-    ),
-
-    define_statement: $ => seq(
-      'define',
-      choice($.macro_variable, $.macro_function)
-    ),
-
-    macro_variable: $ => seq(
-      alias($.identifier, $.variable_name),
-      choice($.integer, $.float)
-    ),
-
-    macro_function: $ => seq(
-      alias($.identifier, $.function_name),
-      alias($._macro_arguments, $.arguments),
+      choice(
+        alias('ramp1', $.ramp1),
+        alias('ramp2', $.ramp2)
+      ),
+      ':',
       $.expression_statement
     ),
 
-    _macro_arguments: $ => args(',', repeat1(alias($.identifier, $.variable_name))),
+    macro_statement: $ => seq(
+      alias($.identifier, $.name),
+      ':=',
+      $.expression_statement
+    ),
+
+    macro_function_statement: $ => seq(
+      alias($.identifier, $.name),
+      $.macro_arguments,
+      ':=',
+      $.expression_statement
+    ),
+
+    macro_arguments: $ => args($._delimiter, repeat1(alias($.identifier, $.name))),
 
     expression_statement: $ => $._expressions,
 
@@ -95,7 +76,9 @@ module.exports = grammar({
       $.binary_operator,
       $.unary_operator,
       $.comparison_operator,
-      $._call_expressions,
+      $.call_function,
+      $.call_macro,
+      $.call_macro_function
     ),
 
     boolean_operator: $ => choice(
@@ -117,7 +100,8 @@ module.exports = grammar({
     ),
 
     unary_operator: $ => choice(
-      prec(PREC.unary, seq('~', $._expressions))
+      prec(PREC.unary, seq('~', $._expressions)),
+      prec(PREC.unary, seq('!', $._expressions))
     ),
 
     comparison_operator: $ => prec.left(
@@ -130,25 +114,21 @@ module.exports = grammar({
 
     parenthesized: $ => seq('(', $._expressions, ')'),
 
-    _call_expressions: $ => choice(
-      $.call_function,
-      alias($.identifier, $.call_macro_variable),
-      $.call_macro_function
-    ),
-
     call_function: $ => seq(
-      $.function_name,
+      alias($.function_name, $.name),
       $.arguments
     ),
+
+    call_macro: $ => alias($.identifier, $.name),
 
     call_macro_function: $ => seq(
-      alias($.identifier, $.function_name),
+      alias($.identifier, $.name),
       $.arguments
     ),
 
-    arguments: $ => args(',', repeat1($._expressions)),
+    arguments: $ => args($._delimiter, repeat1($._expressions)),
 
-    reserved_word: $ => /@|:/,
+    _delimiter: $ => choice(',', '\\,'),
 
     integer: $ => /[0-9]+/,
 

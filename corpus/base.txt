@@ -49,8 +49,8 @@ ramp2: sin(1000 / ($v1%4000)*2)
 macro-statement
 ========
 
-PI := 3.14159265
-pulse := if($v1<0.5, 1, 0)
+PI = 3.14159265
+pulse = if($v1<0.5, 1, 0)
 
 ---
 (program
@@ -69,7 +69,7 @@ pulse := if($v1<0.5, 1, 0)
 macro-function-statement
 ========
 
-osc(freq, time) := sin(2 * PI * freq * time)
+osc(freq, time) = sin(2 * PI * freq * time)
 
 ---
 (program

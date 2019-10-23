@@ -52,14 +52,14 @@ module.exports = grammar({
 
     macro_statement: $ => seq(
       alias($.identifier, $.name),
-      ':=',
+      '=',
       $.expression_statement
     ),
 
     macro_function_statement: $ => seq(
       alias($.identifier, $.name),
       $.macro_arguments,
-      ':=',
+      '=',
       $.expression_statement
     ),
 
@@ -150,10 +150,6 @@ module.exports = grammar({
 });
 
 function sep(separator, rule) {
-  return optional(sep1(separator, rule))
-}
-
-function sep1(separator, rule) {
   return seq(rule, repeat(seq(separator, rule)))
 }
 

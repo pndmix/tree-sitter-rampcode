@@ -29,16 +29,24 @@ module.exports = grammar({
     program: $ => repeat($._statement),
 
     _statement: $ => choice(
+      $.default_statement,
       $.cps_statement,
       $.ramp_statement,
       $.macro_statement,
       $.macro_function_statement,
     ),
 
+    default_statement: $ => seq(
+      alias($.number, $.cps),
+      alias($.expression_statement, $.ramp1),
+      alias($.expression_statement, $.ramp2)
+    ),
+
     cps_statement: $ => seq(
       'cps',
       ':',
-      choice($.integer, $.float)
+      optional('-'),
+      $.number
     ),
 
     ramp_statement: $ => seq(
@@ -68,8 +76,7 @@ module.exports = grammar({
     expression_statement: $ => $._expressions,
 
     _expressions: $ => choice(
-      $.integer,
-      $.float,
+      $.number,
       $.signal,
       $.parenthesized,
       $.boolean_operator,
@@ -101,7 +108,8 @@ module.exports = grammar({
 
     unary_operator: $ => choice(
       prec(PREC.unary, seq('~', $._expressions)),
-      prec(PREC.unary, seq('!', $._expressions))
+      prec(PREC.unary, seq('!', $._expressions)),
+      prec(PREC.unary, seq('-', $._expressions))
     ),
 
     comparison_operator: $ => prec.left(
@@ -130,19 +138,32 @@ module.exports = grammar({
 
     _delimiter: $ => choice(',', '\\,'),
 
-    integer: $ => /[0-9]+/,
-
-    float: $ => /(([1-9][0-9]*\.[0-9]*)|(0?\.[0-9]+))/,
+    number: $ => {
+      const integer = /[0-9]+/
+      const float = /([1-9][0-9]*\.[0-9]*)|(0?\.[0-9]+)/
+      const exponent = seq(
+        choice(integer, float),
+        choice('e', 'E'),
+        optional(choice('-', '+')),
+        integer
+      )
+      return token(choice(integer, float, exponent))
+    },
 
     signal: $ => '$v1',
 
-    function_name: $ => /(if|int|rint|float|min|max|abs|floor|ceil|fmod|pow|sqrt|cbrt|exp|expm1|log|log1p|log10|fact|sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh)/,
+    function_name: $ => {
+      const base = /(if|int|rint|float|min|max|abs|)/
+      const power = /(pow|sqrt|exp|ln|log|log10|fact|cbrt|expm1|log1p|ldexp)/
+      const trigonometric = /(sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh|floor|ceil|fmod)/
+      return token(choice(base, power, trigonometric))
+    },
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
 
     comment: $ => token(
       choice(
-        seq('--', /.*/),
+        seq('//', /.*/),
         seq('/*', repeat(choice(/[^*]/, /\*[^/]/)), '*/')
       )
     ),

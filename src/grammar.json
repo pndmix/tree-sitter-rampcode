@@ -38,31 +38,16 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "number"
-          },
-          "named": true,
-          "value": "cps"
+          "type": "SYMBOL",
+          "name": "_signed_number"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "expression_statement"
-          },
-          "named": true,
-          "value": "ramp1"
+          "type": "SYMBOL",
+          "name": "expression_statement"
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "expression_statement"
-          },
-          "named": true,
-          "value": "ramp2"
+          "type": "SYMBOL",
+          "name": "expression_statement"
         }
       ]
     },
@@ -78,20 +63,8 @@
           "value": ":"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "-"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
           "type": "SYMBOL",
-          "name": "number"
+          "name": "_signed_number"
         }
       ]
     },
@@ -850,6 +823,27 @@
           }
         ]
       }
+    },
+    "_signed_number": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "-"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        }
+      ]
     },
     "signal": {
       "type": "STRING",

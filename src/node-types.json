@@ -280,15 +280,11 @@
       "required": false,
       "types": [
         {
-          "type": "cps",
+          "type": "expression_statement",
           "named": true
         },
         {
-          "type": "ramp1",
-          "named": true
-        },
-        {
-          "type": "ramp2",
+          "type": "number",
           "named": true
         }
       ]
@@ -559,10 +555,6 @@
     "named": false
   },
   {
-    "type": "-",
-    "named": false
-  },
-  {
     "type": "ramp1",
     "named": false
   },
@@ -604,6 +596,10 @@
   },
   {
     "type": "+",
+    "named": false
+  },
+  {
+    "type": "-",
     "named": false
   },
   {

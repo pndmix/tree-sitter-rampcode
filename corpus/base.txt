@@ -7,10 +7,10 @@ default-statement
 ---
 (program
   (default_statement
-    (cps)
-    (ramp1
+    (number)
+    (expression_statement
       (binary_operator (binary_operator (signal) (number)) (number)))
-    (ramp2
+    (expression_statement
       (binary_operator
         (call_function
           (name)

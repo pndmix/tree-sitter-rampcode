@@ -38,9 +38,9 @@ module.exports = grammar({
     ),
 
     default_statement: $ => seq(
-      alias($.number, $.cps),
-      alias($.expression_statement, $.ramp1),
-      alias($.expression_statement, $.ramp2)
+      $.number,
+      $.expression_statement,
+      $.expression_statement
     ),
 
     cps_statement: $ => seq(

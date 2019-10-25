@@ -42,7 +42,7 @@ cps-statement
 ========
 
 cps: 0.125
-cps: 1
+cps: 1e-2
 
 ---
 (program 

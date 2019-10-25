@@ -8,7 +8,8 @@ const PREC = {
   shift: 7,
   plus: 8,
   times: 9,
-  unary: 10
+  unary: 10,
+  sign: 11
 }
 
 module.exports = grammar({
@@ -45,7 +46,6 @@ module.exports = grammar({
     cps_statement: $ => seq(
       'cps',
       ':',
-      optional('-'),
       $.number
     ),
 
@@ -147,7 +147,9 @@ module.exports = grammar({
         optional(choice('-', '+')),
         integer
       )
-      return token(choice(integer, float, exponent))
+      return token(
+        prec(PREC.sign, seq(optional('-'), choice(integer, float, exponent)))
+      )
     },
 
     signal: $ => '$v1',

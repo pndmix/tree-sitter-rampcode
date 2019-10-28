@@ -534,8 +534,33 @@
                 "value": "~"
               },
               {
-                "type": "SYMBOL",
-                "name": "_expressions"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "parenthesized"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_function"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_macro"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_macro_function"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "signal"
+                  }
+                ]
               }
             ]
           }
@@ -551,8 +576,33 @@
                 "value": "!"
               },
               {
-                "type": "SYMBOL",
-                "name": "_expressions"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "parenthesized"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_function"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_macro"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_macro_function"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "signal"
+                  }
+                ]
               }
             ]
           }
@@ -568,8 +618,33 @@
                 "value": "-"
               },
               {
-                "type": "SYMBOL",
-                "name": "_expressions"
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "parenthesized"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_function"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_macro"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "call_macro_function"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "number"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "signal"
+                  }
+                ]
               }
             ]
           }

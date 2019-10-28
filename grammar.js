@@ -105,11 +105,21 @@ module.exports = grammar({
       prec.left(PREC.bitwise_or, seq($._expressions, '|', $._expressions)),
     ),
 
-    unary_operator: $ => choice(
-      prec(PREC.unary, seq('~', $._expressions)),
-      prec(PREC.unary, seq('!', $._expressions)),
-      prec(PREC.unary, seq('-', $._expressions))
-    ),
+    unary_operator: $ => {
+      const exprs = choice(
+        $.parenthesized,
+        $.call_function,
+        $.call_macro,
+        $.call_macro_function,
+        $.number,
+        $.signal  
+      )
+      return choice(
+        prec(PREC.unary, seq('~', exprs)),
+        prec(PREC.unary, seq('!', exprs)),
+        prec(PREC.unary, seq('-', exprs))
+      )
+    },
 
     comparison_operator: $ => prec.left(
       PREC.compare,

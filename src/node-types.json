@@ -504,14 +504,6 @@
       "required": false,
       "types": [
         {
-          "type": "binary_operator",
-          "named": true
-        },
-        {
-          "type": "boolean_operator",
-          "named": true
-        },
-        {
           "type": "call_function",
           "named": true
         },
@@ -524,10 +516,6 @@
           "named": true
         },
         {
-          "type": "comparison_operator",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
@@ -537,10 +525,6 @@
         },
         {
           "type": "signal",
-          "named": true
-        },
-        {
-          "type": "unary_operator",
           "named": true
         }
       ]

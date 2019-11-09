@@ -7,7 +7,7 @@ default-statement
 ---
 (program
   (default_statement
-    (number)
+    (signed_number (number))
     (expression_statement
       (binary_operator (binary_operator (signal) (number)) (number)))
     (expression_statement
@@ -46,8 +46,8 @@ cps: 1e-2
 
 ---
 (program 
-  (cps_statement (number))
-  (cps_statement (number))) 
+  (cps_statement (signed_number (number)))
+  (cps_statement (signed_number (number)))) 
 
 
 ========
@@ -59,11 +59,9 @@ ramp2: sin(1000 / ($v1%4000)*2)
 
 ---
 (program
-  (ramp_statement
-    (ramp1)
+  (ramp1_statement
     (expression_statement (binary_operator (binary_operator (signal) (number)) (number))))
-  (ramp_statement
-    (ramp2)
+  (ramp2_statement
     (expression_statement
       (call_function
         (name)

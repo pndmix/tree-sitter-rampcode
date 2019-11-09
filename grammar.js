@@ -31,13 +31,14 @@ module.exports = grammar({
     _statement: $ => choice(
       $.default_statement,
       $.cps_statement,
-      $.ramp_statement,
+      $.ramp1_statement,
+      $.ramp2_statement,
       $.macro_statement,
       $.macro_function_statement,
     ),
 
     default_statement: $ => seq(
-      $._signed_number,
+      $.signed_number,
       $.expression_statement,
       $.expression_statement
     ),
@@ -45,14 +46,17 @@ module.exports = grammar({
     cps_statement: $ => seq(
       'cps',
       ':',
-      $._signed_number
+      $.signed_number
     ),
 
-    ramp_statement: $ => seq(
-      choice(
-        alias('ramp1', $.ramp1),
-        alias('ramp2', $.ramp2)
-      ),
+    ramp1_statement: $ => seq(
+      'ramp1',
+      ':',
+      $.expression_statement
+    ),
+
+    ramp2_statement: $ => seq(
+      'ramp2',
       ':',
       $.expression_statement
     ),
@@ -159,7 +163,7 @@ module.exports = grammar({
       return token(choice(integer, float, exponent))
     },
 
-    _signed_number: $ => seq(
+    signed_number: $ => seq(
       optional('-'),
       $.number
     ),

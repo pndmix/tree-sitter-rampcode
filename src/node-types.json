@@ -265,7 +265,7 @@
       "required": false,
       "types": [
         {
-          "type": "number",
+          "type": "signed_number",
           "named": true
         }
       ]
@@ -284,7 +284,7 @@
           "named": true
         },
         {
-          "type": "number",
+          "type": "signed_number",
           "named": true
         }
       ]
@@ -474,14 +474,18 @@
           "named": true
         },
         {
-          "type": "ramp_statement",
+          "type": "ramp1_statement",
+          "named": true
+        },
+        {
+          "type": "ramp2_statement",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "ramp_statement",
+    "type": "ramp1_statement",
     "named": true,
     "fields": {},
     "children": {
@@ -490,6 +494,36 @@
       "types": [
         {
           "type": "expression_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "ramp2_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expression_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "signed_number",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "number",
           "named": true
         }
       ]

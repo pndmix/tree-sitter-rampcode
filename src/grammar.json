@@ -22,7 +22,11 @@
         },
         {
           "type": "SYMBOL",
-          "name": "ramp_statement"
+          "name": "ramp1_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ramp2_statement"
         },
         {
           "type": "SYMBOL",
@@ -39,7 +43,7 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "_signed_number"
+          "name": "signed_number"
         },
         {
           "type": "SYMBOL",
@@ -64,35 +68,33 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_signed_number"
+          "name": "signed_number"
         }
       ]
     },
-    "ramp_statement": {
+    "ramp1_statement": {
       "type": "SEQ",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "STRING",
-                "value": "ramp1"
-              },
-              "named": true,
-              "value": "ramp1"
-            },
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "STRING",
-                "value": "ramp2"
-              },
-              "named": true,
-              "value": "ramp2"
-            }
-          ]
+          "type": "STRING",
+          "value": "ramp1"
+        },
+        {
+          "type": "STRING",
+          "value": ":"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "expression_statement"
+        }
+      ]
+    },
+    "ramp2_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "ramp2"
         },
         {
           "type": "STRING",
@@ -899,7 +901,7 @@
         ]
       }
     },
-    "_signed_number": {
+    "signed_number": {
       "type": "SEQ",
       "members": [
         {

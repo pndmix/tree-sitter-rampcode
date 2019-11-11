@@ -280,18 +280,22 @@
       "required": false,
       "types": [
         {
-          "type": "expression_statement",
+          "type": "cps",
           "named": true
         },
         {
-          "type": "signed_number",
+          "type": "ramp1",
+          "named": true
+        },
+        {
+          "type": "ramp2",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "expression_statement",
+    "type": "expression",
     "named": true,
     "fields": {},
     "children": {
@@ -365,7 +369,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         },
         {
@@ -388,7 +392,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         },
         {
@@ -493,7 +497,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         }
       ]
@@ -508,7 +512,7 @@
       "required": false,
       "types": [
         {
-          "type": "expression_statement",
+          "type": "expression",
           "named": true
         }
       ]

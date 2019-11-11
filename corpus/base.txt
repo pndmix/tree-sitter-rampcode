@@ -5,21 +5,17 @@ default-statement
 0.5 $v1*8000*4 sin(1000/($v1%4000)*2)*0.4
 
 ---
-(program
+(program 
   (default_statement
-    (signed_number (number))
-    (expression_statement
+    (cps
+      (number))
+    (ramp1
       (binary_operator (binary_operator (signal) (number)) (number)))
-    (expression_statement
+    (ramp2
       (binary_operator
         (call_function
           (name)
-          (arguments
-            (binary_operator
-              (binary_operator
-                (number)
-                (parenthesized (binary_operator (signal) (number))))
-              (number))))
+          (arguments (binary_operator (binary_operator (number) (parenthesized (binary_operator (signal) (number)))) (number))))
         (number)))))
 
 
@@ -60,9 +56,9 @@ ramp2: sin(1000 / ($v1%4000)*2)
 ---
 (program
   (ramp1_statement
-    (expression_statement (binary_operator (binary_operator (signal) (number)) (number))))
+    (expression (binary_operator (binary_operator (signal) (number)) (number))))
   (ramp2_statement
-    (expression_statement
+    (expression
       (call_function
         (name)
         (arguments (binary_operator (binary_operator (number) (parenthesized (binary_operator (signal) (number)))) (number))))))) 
@@ -79,10 +75,10 @@ pulse = if($v1<0.5, 1, 0)
 (program
   (macro_statement
     (name)
-    (expression_statement (number)))
+    (expression (number)))
   (macro_statement
     (name)
-    (expression_statement
+    (expression
       (call_function
         (name)
         (arguments (comparison_operator (signal) (number)) (number) (number)))))) 
@@ -99,7 +95,7 @@ osc(freq, time) = sin(2 * PI * freq * time)
   (macro_function_statement
     (name)
     (macro_arguments (name) (name))
-    (expression_statement
+    (expression
       (call_function
         (name)
         (arguments (binary_operator (binary_operator (binary_operator (number) (call_macro (name))) (call_macro (name))) (call_macro (name))))))))

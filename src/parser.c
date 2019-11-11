@@ -8,7 +8,7 @@
 #define LANGUAGE_VERSION 10
 #define STATE_COUNT 113
 #define SYMBOL_COUNT 63
-#define ALIAS_COUNT 0
+#define ALIAS_COUNT 3
 #define TOKEN_COUNT 36
 #define EXTERNAL_TOKEN_COUNT 0
 #define FIELD_COUNT 0
@@ -58,7 +58,7 @@ enum {
   sym_macro_statement = 41,
   sym_macro_function_statement = 42,
   sym_macro_arguments = 43,
-  sym_expression_statement = 44,
+  sym_expression = 44,
   sym__expressions = 45,
   sym_boolean_operator = 46,
   sym_binary_operator = 47,
@@ -77,6 +77,9 @@ enum {
   aux_sym_comparison_operator_repeat1 = 60,
   aux_sym_arguments_repeat1 = 61,
   aux_sym_arguments_repeat2 = 62,
+  alias_sym_ramp2 = 63,
+  alias_sym_cps = 64,
+  alias_sym_ramp1 = 65,
 };
 
 static const char *ts_symbol_names[] = {
@@ -124,7 +127,7 @@ static const char *ts_symbol_names[] = {
   [sym_macro_statement] = "macro_statement",
   [sym_macro_function_statement] = "macro_function_statement",
   [sym_macro_arguments] = "macro_arguments",
-  [sym_expression_statement] = "expression_statement",
+  [sym_expression] = "expression",
   [sym__expressions] = "_expressions",
   [sym_boolean_operator] = "boolean_operator",
   [sym_binary_operator] = "binary_operator",
@@ -143,6 +146,9 @@ static const char *ts_symbol_names[] = {
   [aux_sym_comparison_operator_repeat1] = "comparison_operator_repeat1",
   [aux_sym_arguments_repeat1] = "arguments_repeat1",
   [aux_sym_arguments_repeat2] = "arguments_repeat2",
+  [alias_sym_ramp2] = "ramp2",
+  [alias_sym_cps] = "cps",
+  [alias_sym_ramp1] = "ramp1",
 };
 
 static const TSSymbolMetadata ts_symbol_metadata[] = {
@@ -322,7 +328,7 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
-  [sym_expression_statement] = {
+  [sym_expression] = {
     .visible = true,
     .named = true,
   },
@@ -397,6 +403,26 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
   [aux_sym_arguments_repeat2] = {
     .visible = false,
     .named = false,
+  },
+  [alias_sym_ramp2] = {
+    .visible = true,
+    .named = true,
+  },
+  [alias_sym_cps] = {
+    .visible = true,
+    .named = true,
+  },
+  [alias_sym_ramp1] = {
+    .visible = true,
+    .named = true,
+  },
+};
+
+static TSSymbol ts_alias_sequences[2][MAX_ALIAS_SEQUENCE_LENGTH] = {
+  [1] = {
+    [0] = alias_sym_cps,
+    [1] = alias_sym_ramp1,
+    [2] = alias_sym_ramp2,
   },
 };
 
@@ -1196,7 +1222,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [10] = {
     [sym_comparison_operator] = STATE(24),
-    [sym_expression_statement] = STATE(23),
+    [sym_expression] = STATE(23),
     [sym__expressions] = STATE(24),
     [sym_parenthesized] = STATE(24),
     [sym_call_function] = STATE(24),
@@ -1217,7 +1243,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [11] = {
     [sym_comparison_operator] = STATE(78),
-    [sym_expression_statement] = STATE(25),
+    [sym_expression] = STATE(25),
     [sym__expressions] = STATE(78),
     [sym_parenthesized] = STATE(78),
     [sym_call_function] = STATE(78),
@@ -1247,7 +1273,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [14] = {
     [sym_comparison_operator] = STATE(78),
-    [sym_expression_statement] = STATE(28),
+    [sym_expression] = STATE(28),
     [sym__expressions] = STATE(78),
     [sym_parenthesized] = STATE(78),
     [sym_call_function] = STATE(78),
@@ -1285,7 +1311,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [17] = {
     [sym_comparison_operator] = STATE(78),
-    [sym_expression_statement] = STATE(30),
+    [sym_expression] = STATE(30),
     [sym__expressions] = STATE(78),
     [sym_parenthesized] = STATE(78),
     [sym_call_function] = STATE(78),
@@ -1394,7 +1420,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [23] = {
     [sym_comparison_operator] = STATE(78),
-    [sym_expression_statement] = STATE(36),
+    [sym_expression] = STATE(36),
     [sym__expressions] = STATE(78),
     [sym_parenthesized] = STATE(78),
     [sym_call_function] = STATE(78),
@@ -1464,7 +1490,7 @@ static uint16_t ts_parse_table[STATE_COUNT][SYMBOL_COUNT] = {
   },
   [27] = {
     [sym_comparison_operator] = STATE(78),
-    [sym_expression_statement] = STATE(51),
+    [sym_expression] = STATE(51),
     [sym__expressions] = STATE(78),
     [sym_parenthesized] = STATE(78),
     [sym_call_function] = STATE(78),
@@ -3397,7 +3423,7 @@ static TSParseActionEntry ts_parse_actions[] = {
   [93] = {.count = 1, .reusable = false}, REDUCE(sym_call_macro, 1),
   [95] = {.count = 1, .reusable = false}, SHIFT(32),
   [97] = {.count = 1, .reusable = false}, SHIFT(35),
-  [99] = {.count = 1, .reusable = false}, REDUCE(sym_expression_statement, 1),
+  [99] = {.count = 1, .reusable = false}, REDUCE(sym_expression, 1),
   [101] = {.count = 1, .reusable = false}, SHIFT(37),
   [103] = {.count = 1, .reusable = false}, SHIFT(38),
   [105] = {.count = 1, .reusable = false}, SHIFT(39),
@@ -3434,8 +3460,8 @@ static TSParseActionEntry ts_parse_actions[] = {
   [167] = {.count = 1, .reusable = false}, SHIFT(82),
   [169] = {.count = 1, .reusable = true}, SHIFT(54),
   [171] = {.count = 1, .reusable = false}, SHIFT(90),
-  [173] = {.count = 1, .reusable = true}, REDUCE(sym_default_statement, 3),
-  [175] = {.count = 1, .reusable = false}, REDUCE(sym_default_statement, 3),
+  [173] = {.count = 1, .reusable = true}, REDUCE(sym_default_statement, 3, .production_id = 1),
+  [175] = {.count = 1, .reusable = false}, REDUCE(sym_default_statement, 3, .production_id = 1),
   [177] = {.count = 1, .reusable = false}, SHIFT(55),
   [179] = {.count = 1, .reusable = false}, SHIFT(56),
   [181] = {.count = 1, .reusable = false}, SHIFT(57),
@@ -3481,7 +3507,7 @@ static TSParseActionEntry ts_parse_actions[] = {
   [270] = {.count = 1, .reusable = true}, REDUCE(sym_signed_number, 2),
   [272] = {.count = 1, .reusable = true}, REDUCE(sym_call_macro, 1),
   [274] = {.count = 1, .reusable = true}, SHIFT(112),
-  [276] = {.count = 1, .reusable = true}, REDUCE(sym_expression_statement, 1),
+  [276] = {.count = 1, .reusable = true}, REDUCE(sym_expression, 1),
   [278] = {.count = 1, .reusable = true}, REDUCE(sym_unary_operator, 2),
   [280] = {.count = 1, .reusable = true}, REDUCE(sym_call_function, 2),
   [282] = {.count = 1, .reusable = true}, REDUCE(sym_call_macro_function, 2),
@@ -3526,6 +3552,7 @@ extern const TSLanguage *tree_sitter_rampcode(void) {
     .parse_actions = ts_parse_actions,
     .lex_modes = ts_lex_modes,
     .symbol_names = ts_symbol_names,
+    .alias_sequences = (const TSSymbol *)ts_alias_sequences,
     .field_count = FIELD_COUNT,
     .max_alias_sequence_length = MAX_ALIAS_SEQUENCE_LENGTH,
     .lex_fn = ts_lex,

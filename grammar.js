@@ -38,9 +38,9 @@ module.exports = grammar({
     ),
 
     default_statement: $ => seq(
-      $.signed_number,
-      $.expression_statement,
-      $.expression_statement
+      alias($.signed_number, $.cps),
+      alias($.expression, $.ramp1),
+      alias($.expression, $.ramp2)
     ),
 
     cps_statement: $ => seq(
@@ -52,31 +52,31 @@ module.exports = grammar({
     ramp1_statement: $ => seq(
       'ramp1',
       ':',
-      $.expression_statement
+      $.expression
     ),
 
     ramp2_statement: $ => seq(
       'ramp2',
       ':',
-      $.expression_statement
+      $.expression
     ),
 
     macro_statement: $ => seq(
       alias($.identifier, $.name),
       '=',
-      $.expression_statement
+      $.expression
     ),
 
     macro_function_statement: $ => seq(
       alias($.identifier, $.name),
       $.macro_arguments,
       '=',
-      $.expression_statement
+      $.expression
     ),
 
     macro_arguments: $ => args($._delimiter, repeat1(alias($.identifier, $.name))),
 
-    expression_statement: $ => $._expressions,
+    expression: $ => $._expressions,
 
     _expressions: $ => choice(
       $.number,

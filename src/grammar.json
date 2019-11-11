@@ -42,16 +42,31 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "SYMBOL",
-          "name": "signed_number"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "signed_number"
+          },
+          "named": true,
+          "value": "cps"
         },
         {
-          "type": "SYMBOL",
-          "name": "expression_statement"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          },
+          "named": true,
+          "value": "ramp1"
         },
         {
-          "type": "SYMBOL",
-          "name": "expression_statement"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          },
+          "named": true,
+          "value": "ramp2"
         }
       ]
     },
@@ -85,7 +100,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression_statement"
+          "name": "expression"
         }
       ]
     },
@@ -102,7 +117,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression_statement"
+          "name": "expression"
         }
       ]
     },
@@ -124,7 +139,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression_statement"
+          "name": "expression"
         }
       ]
     },
@@ -150,7 +165,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "expression_statement"
+          "name": "expression"
         }
       ]
     },
@@ -211,7 +226,7 @@
         }
       ]
     },
-    "expression_statement": {
+    "expression": {
       "type": "SYMBOL",
       "name": "_expressions"
     },

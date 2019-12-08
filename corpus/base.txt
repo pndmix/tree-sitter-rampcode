@@ -1,25 +1,4 @@
 ========
-default-statement
-========
-
-0.5 $v1*8000*4 sin(1000/($v1%4000)*2)*0.4
-
----
-(program 
-  (default_statement
-    (cps
-      (number))
-    (ramp1
-      (binary_operator (binary_operator (signal) (number)) (number)))
-    (ramp2
-      (binary_operator
-        (call_function
-          (name)
-          (arguments (binary_operator (binary_operator (number) (parenthesized (binary_operator (signal) (number)))) (number))))
-        (number)))))
-
-
-========
 comments
 ========
 
@@ -34,68 +13,43 @@ This is a comment.
 
 
 ========
-cps-statement
+hz-statement
 ========
 
-cps: 0.125
-cps: 1e-2
+hz @ 1 / 4
 
 ---
 (program 
-  (cps_statement (signed_number (number)))
-  (cps_statement (signed_number (number)))) 
+  (hz_statement (expression (binary_operator (number) (number)))))
 
 
 ========
 ramp-statement
 ========
 
-ramp1: $v1*8000*4
-ramp2: sin(1000 / ($v1%4000)*2)
+$v1 * 8000 @ sin($v1)
 
 ---
 (program
-  (ramp1_statement
-    (expression (binary_operator (binary_operator (signal) (number)) (number))))
-  (ramp2_statement
+  (ramp_statement
     (expression
-      (call_function
-        (name)
-        (arguments (binary_operator (binary_operator (number) (parenthesized (binary_operator (signal) (number)))) (number))))))) 
+      (binary_operator (signal) (number)))
+    (expression
+      (call_function (name) (arguments (signal))))))
 
 
 ========
-macro-statement
+one-liner-statements
 ========
 
-PI = 3.14159265
-pulse = if($v1<0.5, 1, 0)
+hz @ 1/4; $v1 * 8000 @ sin($v1);
 
 ---
 (program
-  (macro_statement
-    (name)
-    (expression (number)))
-  (macro_statement
-    (name)
+  (hz_statement
+    (expression (binary_operator (number) (number))))
+  (ramp_statement
     (expression
-      (call_function
-        (name)
-        (arguments (comparison_operator (signal) (number)) (number) (number)))))) 
-
-
-========
-macro-function-statement
-========
-
-osc(freq, time) = sin(2 * PI * freq * time)
-
----
-(program
-  (macro_function_statement
-    (name)
-    (macro_arguments (name) (name))
+      (binary_operator (signal) (number)))
     (expression
-      (call_function
-        (name)
-        (arguments (binary_operator (binary_operator (binary_operator (number) (call_macro (name))) (call_macro (name))) (call_macro (name))))))))
+      (call_function (name) (arguments (signal))))))

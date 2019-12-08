@@ -8,7 +8,8 @@ const PREC = {
   shift: 7,
   plus: 8,
   times: 9,
-  unary: 10
+  unary: 10,
+  parameter: 11
 }
 
 module.exports = grammar({
@@ -19,45 +20,44 @@ module.exports = grammar({
     $.comment,
   ],
 
-  inline: $ => [
-    $._statement
-  ],
-
   word: $ => $.identifier,
 
   rules: {
     program: $ => repeat($._statement),
 
-    _statement: $ => choice(
-      $.default_statement,
-      $.cps_statement,
-      $.ramp1_statement,
-      $.ramp2_statement,
-      $.macro_statement,
-      $.macro_function_statement,
+    _statement: $ => seq(
+      choice(
+        $.hz_statement,
+        $.ramp_statement,
+        $.ramp1_statement,
+        $.ramp2_statement,
+        $.macro_statement,
+        $.macro_function_statement
+      ),
+      optional($._semicolon)
     ),
 
-    default_statement: $ => seq(
-      alias($.signed_number, $.cps),
-      alias($.expression, $.ramp1),
-      alias($.expression, $.ramp2)
+    hz_statement: $ => seq(
+      /hz/,
+      $._keyword_operator,
+      $.expression
     ),
 
-    cps_statement: $ => seq(
-      'cps',
-      ':',
-      $.signed_number
+    ramp_statement: $ => seq(
+      $.expression,
+      $._keyword_operator,
+      $.expression
     ),
 
     ramp1_statement: $ => seq(
-      'ramp1',
-      ':',
+      /ramp1/,
+      $._keyword_operator,
       $.expression
     ),
 
     ramp2_statement: $ => seq(
-      'ramp2',
-      ':',
+      /ramp2/,
+      $._keyword_operator,
       $.expression
     ),
 
@@ -69,12 +69,14 @@ module.exports = grammar({
 
     macro_function_statement: $ => seq(
       alias($.identifier, $.name),
-      $.macro_arguments,
+      $.parameters,
       '=',
       $.expression
     ),
 
-    macro_arguments: $ => args($._delimiter, repeat1(alias($.identifier, $.name))),
+    parameters: $ => args($._delimiter, repeat1($._parameter)),
+
+    _parameter: $ => prec(PREC.parameter, alias($.identifier, $.name)),
 
     expression: $ => $._expressions,
 
@@ -116,7 +118,7 @@ module.exports = grammar({
         $.call_macro,
         $.call_macro_function,
         $.number,
-        $.signal  
+        $.signal
       )
       return choice(
         prec(PREC.unary, seq('~', exprs)),
@@ -147,7 +149,9 @@ module.exports = grammar({
       $.arguments
     ),
 
-    arguments: $ => args($._delimiter, repeat1($._expressions)),
+    arguments: $ => args($._delimiter, repeat1($._argument)),
+
+    _argument: $ => $._expressions,
 
     _delimiter: $ => choice(',', '\\,'),
 
@@ -163,10 +167,11 @@ module.exports = grammar({
       return token(choice(integer, float, exponent))
     },
 
-    signed_number: $ => seq(
-      optional('-'),
-      $.number
-    ),
+    _delimiter: $ => choice(',', '\\,'),
+
+    _keyword_operator: $ => choice(':', '@'),
+
+    _semicolon: $ => ';',
 
     signal: $ => '$v1',
 
@@ -176,6 +181,11 @@ module.exports = grammar({
       const trigonometric = /(sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh|floor|ceil|fmod)/
       return token(choice(base, power, trigonometric))
     },
+
+    _keyword_identifier: $ => alias(
+      choice('hz', 'ramp1', 'ramp2'),
+      $.identifier
+    ),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
 

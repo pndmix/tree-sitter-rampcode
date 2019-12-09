@@ -7,6 +7,7 @@ ramp1: $v1*8000*4
 ---
 (program
   (ramp1_statement
+    (keyword_identifier)
     (expression
       (binary_operator (binary_operator (signal) (number)) (number)))))
 
@@ -20,6 +21,7 @@ ramp2: sin(1000 / ($v1%4000)*2)
 ---
 (program
   (ramp2_statement
+    (keyword_identifier)
     (expression
       (call_function
         (name)

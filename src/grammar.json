@@ -17,27 +17,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "hz_statement"
+              "name": "_default_statement"
             },
             {
               "type": "SYMBOL",
-              "name": "ramp_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "ramp1_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "ramp2_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "macro_statement"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "macro_function_statement"
+              "name": "_extended_statement"
             }
           ]
         },
@@ -55,12 +39,30 @@
         }
       ]
     },
+    "_default_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "hz_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ramp_statement"
+        }
+      ]
+    },
     "hz_statement": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "hz"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "hz"
+          },
+          "named": true,
+          "value": "keyword_identifier"
         },
         {
           "type": "SYMBOL",
@@ -89,12 +91,38 @@
         }
       ]
     },
+    "_extended_statement": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "ramp1_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "ramp2_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "macro_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "macro_function_statement"
+        }
+      ]
+    },
     "ramp1_statement": {
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "ramp1"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "ramp1"
+          },
+          "named": true,
+          "value": "keyword_identifier"
         },
         {
           "type": "SYMBOL",
@@ -110,8 +138,13 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "PATTERN",
-          "value": "ramp2"
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "ramp2"
+          },
+          "named": true,
+          "value": "keyword_identifier"
         },
         {
           "type": "SYMBOL",
@@ -1055,7 +1088,10 @@
   ],
   "conflicts": [],
   "externals": [],
-  "inline": [],
+  "inline": [
+    "_default_statement",
+    "_extended_statement"
+  ],
   "supertypes": []
 }
 

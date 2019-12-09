@@ -90,9 +90,9 @@ enum {
 static const char *ts_symbol_names[] = {
   [ts_builtin_sym_end] = "end",
   [sym_identifier] = "name",
-  [aux_sym_hz_statement_token1] = "hz_statement_token1",
-  [aux_sym_ramp1_statement_token1] = "ramp1_statement_token1",
-  [aux_sym_ramp2_statement_token1] = "ramp2_statement_token1",
+  [aux_sym_hz_statement_token1] = "keyword_identifier",
+  [aux_sym_ramp1_statement_token1] = "keyword_identifier",
+  [aux_sym_ramp2_statement_token1] = "keyword_identifier",
   [anon_sym_EQ] = "=",
   [anon_sym_LPAREN] = "(",
   [anon_sym_RPAREN] = ")",
@@ -171,16 +171,16 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .named = true,
   },
   [aux_sym_hz_statement_token1] = {
-    .visible = false,
-    .named = false,
+    .visible = true,
+    .named = true,
   },
   [aux_sym_ramp1_statement_token1] = {
-    .visible = false,
-    .named = false,
+    .visible = true,
+    .named = true,
   },
   [aux_sym_ramp2_statement_token1] = {
-    .visible = false,
-    .named = false,
+    .visible = true,
+    .named = true,
   },
   [anon_sym_EQ] = {
     .visible = true,

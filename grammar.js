@@ -20,6 +20,11 @@ module.exports = grammar({
     $.comment,
   ],
 
+  inline: $ => [
+    $._default_statement,
+    $._extended_statement
+  ],
+
   word: $ => $.identifier,
 
   rules: {
@@ -27,18 +32,19 @@ module.exports = grammar({
 
     _statement: $ => seq(
       choice(
-        $.hz_statement,
-        $.ramp_statement,
-        $.ramp1_statement,
-        $.ramp2_statement,
-        $.macro_statement,
-        $.macro_function_statement
+        $._default_statement,
+        $._extended_statement
       ),
       optional($._semicolon)
     ),
 
+    _default_statement: $ => choice(
+      $.hz_statement,
+      $.ramp_statement
+    ),
+
     hz_statement: $ => seq(
-      /hz/,
+      alias(/hz/, $.keyword_identifier),
       $._keyword_operator,
       $.expression
     ),
@@ -49,14 +55,21 @@ module.exports = grammar({
       $.expression
     ),
 
+    _extended_statement: $ => choice(
+      $.ramp1_statement,
+      $.ramp2_statement,
+      $.macro_statement,
+      $.macro_function_statement
+    ),
+
     ramp1_statement: $ => seq(
-      /ramp1/,
+      alias(/ramp1/, $.keyword_identifier),
       $._keyword_operator,
       $.expression
     ),
 
     ramp2_statement: $ => seq(
-      /ramp2/,
+      alias(/ramp2/, $.keyword_identifier),
       $._keyword_operator,
       $.expression
     ),

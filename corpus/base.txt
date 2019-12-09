@@ -20,7 +20,9 @@ hz @ 1 / 4
 
 ---
 (program 
-  (hz_statement (expression (binary_operator (number) (number)))))
+  (hz_statement
+    (keyword_identifier)
+    (expression (binary_operator (number) (number)))))
 
 
 ========
@@ -47,6 +49,7 @@ hz @ 1/4; $v1 * 8000 @ sin($v1);
 ---
 (program
   (hz_statement
+    (keyword_identifier)
     (expression (binary_operator (number) (number))))
   (ramp_statement
     (expression

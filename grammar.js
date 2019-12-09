@@ -167,8 +167,6 @@ module.exports = grammar({
       return token(choice(integer, float, exponent))
     },
 
-    _delimiter: $ => choice(',', '\\,'),
-
     _keyword_operator: $ => choice(':', '@'),
 
     _semicolon: $ => ';',

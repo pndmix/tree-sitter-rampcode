@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-rampcode",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Rampcode grammar for tree-sitter",
   "keywords": [
     "tree-sitter",

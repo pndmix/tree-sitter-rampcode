@@ -40,7 +40,8 @@ module.exports = grammar({
 
     _default_statement: $ => choice(
       $.hz_statement,
-      $.ramp_statement
+      $.ramp_statement,
+      $.const_statement
     ),
 
     hz_statement: $ => seq(
@@ -54,6 +55,12 @@ module.exports = grammar({
       $._keyword_operator,
       $.expression
     ),
+
+    const_statement: $ => prec(12, seq(
+      alias($.value, $.keyword_identifier),
+      $._keyword_operator,
+      $.number
+    )),
 
     _extended_statement: $ => choice(
       $.ramp1_statement,
@@ -103,7 +110,8 @@ module.exports = grammar({
       $.comparison_operator,
       $.call_function,
       $.call_macro,
-      $.call_macro_function
+      $.call_macro_function,
+      $.value
     ),
 
     boolean_operator: $ => choice(
@@ -193,8 +201,10 @@ module.exports = grammar({
       return token(choice(base, power, trigonometric))
     },
 
+    value: $ => 'c',
+
     _keyword_identifier: $ => alias(
-      choice('hz', 'ramp1', 'ramp2'),
+      choice('hz', $.value, 'ramp1', 'ramp2'),
       $.identifier
     ),
 

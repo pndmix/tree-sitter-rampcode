@@ -29,13 +29,13 @@ hz @ 1 / 4
 ramp-statement
 ========
 
-$v1 * 8000 @ sin($v1)
+$v1 * c @ sin($v1)
 
 ---
 (program
   (ramp_statement
     (expression
-      (binary_operator (signal) (number)))
+      (binary_operator (signal) (value)))
     (expression
       (call_function (name) (arguments (signal))))))
 
@@ -56,3 +56,13 @@ hz @ 1/4; $v1 * 8000 @ sin($v1);
       (binary_operator (signal) (number)))
     (expression
       (call_function (name) (arguments (signal))))))
+
+========
+const-statement
+========
+
+c @ 8000;
+
+---
+(program
+  (const_statement (keyword_identifier) (number)))

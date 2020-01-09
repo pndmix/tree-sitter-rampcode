@@ -366,6 +366,11 @@
     }
   },
   {
+    "type": "keyword_identifier",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "macro_function_statement",
     "named": true,
     "fields": {},
@@ -605,6 +610,11 @@
     }
   },
   {
+    "type": "value",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "!",
     "named": false
   },
@@ -701,12 +711,12 @@
     "named": false
   },
   {
-    "type": "identifier",
-    "named": true
+    "type": "c",
+    "named": false
   },
   {
-    "type": "keyword_identifier",
-    "named": true
+    "type": "hz",
+    "named": false
   },
   {
     "type": "name",
@@ -717,11 +727,15 @@
     "named": true
   },
   {
-    "type": "signal",
-    "named": true
+    "type": "ramp1",
+    "named": false
   },
   {
-    "type": "value",
+    "type": "ramp2",
+    "named": false
+  },
+  {
+    "type": "signal",
     "named": true
   },
   {

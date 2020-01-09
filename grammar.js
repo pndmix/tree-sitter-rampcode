@@ -9,7 +9,15 @@ const PREC = {
   plus: 8,
   times: 9,
   unary: 10,
-  parameter: 11
+  parameter: 11,
+  const: 20,
+}
+
+const STATEMENT_KEYWORDS = {
+  hz: 'hz',
+  c: 'c',
+  ramp1: 'ramp1',
+  ramp2: 'ramp2',
 }
 
 module.exports = grammar({
@@ -45,7 +53,7 @@ module.exports = grammar({
     ),
 
     hz_statement: $ => seq(
-      alias(/hz/, $.keyword_identifier),
+      alias(reg(STATEMENT_KEYWORDS.hz), $.keyword_identifier),
       $._keyword_operator,
       $.expression
     ),
@@ -56,7 +64,7 @@ module.exports = grammar({
       $.expression
     ),
 
-    const_statement: $ => prec(12, seq(
+    const_statement: $ => prec(PREC.const, seq(
       alias($.value, $.keyword_identifier),
       $._keyword_operator,
       $.number
@@ -70,13 +78,13 @@ module.exports = grammar({
     ),
 
     ramp1_statement: $ => seq(
-      alias(/ramp1/, $.keyword_identifier),
+      alias(reg(STATEMENT_KEYWORDS.ramp1), $.keyword_identifier),
       $._keyword_operator,
       $.expression
     ),
 
     ramp2_statement: $ => seq(
-      alias(/ramp2/, $.keyword_identifier),
+      alias(reg(STATEMENT_KEYWORDS.ramp2), $.keyword_identifier),
       $._keyword_operator,
       $.expression
     ),
@@ -201,12 +209,12 @@ module.exports = grammar({
       return token(choice(base, power, trigonometric))
     },
 
-    value: $ => 'c',
+    value: $ => STATEMENT_KEYWORDS.c,
 
-    _keyword_identifier: $ => alias(
-      choice('hz', $.value, 'ramp1', 'ramp2'),
-      $.identifier
-    ),
+    _keyword_identifier: $ => {
+      const keywords = Object.values(STATEMENT_KEYWORDS)
+      return choice(...keywords)
+    },
 
     identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
 
@@ -225,4 +233,8 @@ function sep(separator, rule) {
 
 function args(separator, rule) {
   return seq(token.immediate('('), sep(separator, rule), ')')
+}
+
+function reg(str) {
+  return new RegExp(str)
 }

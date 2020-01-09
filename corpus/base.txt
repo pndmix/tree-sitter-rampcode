@@ -30,6 +30,7 @@ ramp-statement
 ========
 
 $v1 * c @ sin($v1)
+c * $v1 @ sin($v1)
 
 ---
 (program
@@ -37,7 +38,13 @@ $v1 * c @ sin($v1)
     (expression
       (binary_operator (signal) (value)))
     (expression
-      (call_function (name) (arguments (signal))))))
+      (call_function (name) (arguments (signal)))))
+  (ramp_statement
+    (expression
+      (binary_operator (value) (signal)))
+    (expression
+      (call_function (name) (arguments (signal)))))
+)
 
 
 ========

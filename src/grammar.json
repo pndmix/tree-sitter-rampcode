@@ -97,7 +97,7 @@
     },
     "const_statement": {
       "type": "PREC",
-      "value": 12,
+      "value": 20,
       "content": {
         "type": "SEQ",
         "members": [
@@ -1038,30 +1038,25 @@
       "value": "c"
     },
     "_keyword_identifier": {
-      "type": "ALIAS",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "hz"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "value"
-          },
-          {
-            "type": "STRING",
-            "value": "ramp1"
-          },
-          {
-            "type": "STRING",
-            "value": "ramp2"
-          }
-        ]
-      },
-      "named": true,
-      "value": "identifier"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "hz"
+        },
+        {
+          "type": "STRING",
+          "value": "c"
+        },
+        {
+          "type": "STRING",
+          "value": "ramp1"
+        },
+        {
+          "type": "STRING",
+          "value": "ramp2"
+        }
+      ]
     },
     "identifier": {
       "type": "PATTERN",

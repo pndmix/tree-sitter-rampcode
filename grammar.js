@@ -16,8 +16,7 @@ const PREC = {
 const STATEMENT_KEYWORDS = {
   hz: 'hz',
   c: 'c',
-  ramp1: 'ramp1',
-  ramp2: 'ramp2',
+  def: 'def'
 }
 
 module.exports = grammar({
@@ -71,31 +70,19 @@ module.exports = grammar({
     )),
 
     _extended_statement: $ => choice(
-      $.ramp1_statement,
-      $.ramp2_statement,
       $.macro_statement,
       $.macro_function_statement
     ),
 
-    ramp1_statement: $ => seq(
-      alias(reg(STATEMENT_KEYWORDS.ramp1), $.keyword_identifier),
-      $._keyword_operator,
-      $.expression
-    ),
-
-    ramp2_statement: $ => seq(
-      alias(reg(STATEMENT_KEYWORDS.ramp2), $.keyword_identifier),
-      $._keyword_operator,
-      $.expression
-    ),
-
     macro_statement: $ => seq(
+      alias(reg(STATEMENT_KEYWORDS.def), $.keyword_identifier),
       alias($.identifier, $.name),
       '=',
       $.expression
     ),
 
     macro_function_statement: $ => seq(
+      alias(reg(STATEMENT_KEYWORDS.def), $.keyword_identifier),
       alias($.identifier, $.name),
       $.parameters,
       '=',

@@ -383,6 +383,10 @@
           "named": true
         },
         {
+          "type": "keyword_identifier",
+          "named": true
+        },
+        {
           "type": "name",
           "named": true
         },
@@ -403,6 +407,10 @@
       "types": [
         {
           "type": "expression",
+          "named": true
+        },
+        {
+          "type": "keyword_identifier",
           "named": true
         },
         {
@@ -507,53 +515,7 @@
           "named": true
         },
         {
-          "type": "ramp1_statement",
-          "named": true
-        },
-        {
-          "type": "ramp2_statement",
-          "named": true
-        },
-        {
           "type": "ramp_statement",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ramp1_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "keyword_identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "ramp2_statement",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        },
-        {
-          "type": "keyword_identifier",
           "named": true
         }
       ]
@@ -715,6 +677,10 @@
     "named": false
   },
   {
+    "type": "def",
+    "named": false
+  },
+  {
     "type": "hz",
     "named": false
   },
@@ -725,14 +691,6 @@
   {
     "type": "number",
     "named": true
-  },
-  {
-    "type": "ramp1",
-    "named": false
-  },
-  {
-    "type": "ramp2",
-    "named": false
   },
   {
     "type": "signal",

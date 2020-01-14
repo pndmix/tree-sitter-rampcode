@@ -26,6 +26,17 @@ hz @ 1 / 4
 
 
 ========
+const-statement
+========
+
+c @ 8000;
+
+---
+(program
+  (const_statement (keyword_identifier) (number)))
+
+
+========
 ramp-statement
 ========
 
@@ -48,10 +59,10 @@ c * $v1 @ sin($v1)
 
 
 ========
-one-liner-statements
+one-liner
 ========
 
-hz @ 1/4; $v1 * 8000 @ sin($v1);
+hz @ 1/4 $v1 * 8000 @ sin($v1)
 
 ---
 (program
@@ -63,13 +74,3 @@ hz @ 1/4; $v1 * 8000 @ sin($v1);
       (binary_operator (signal) (number)))
     (expression
       (call_function (name) (arguments (signal))))))
-
-========
-const-statement
-========
-
-c @ 8000;
-
----
-(program
-  (const_statement (keyword_identifier) (number)))

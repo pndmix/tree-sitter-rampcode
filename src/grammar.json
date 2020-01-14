@@ -126,14 +126,6 @@
       "members": [
         {
           "type": "SYMBOL",
-          "name": "ramp1_statement"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "ramp2_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "macro_statement"
         },
         {
@@ -142,53 +134,18 @@
         }
       ]
     },
-    "ramp1_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "ramp1"
-          },
-          "named": true,
-          "value": "keyword_identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_operator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression"
-        }
-      ]
-    },
-    "ramp2_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "ALIAS",
-          "content": {
-            "type": "PATTERN",
-            "value": "ramp2"
-          },
-          "named": true,
-          "value": "keyword_identifier"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "_keyword_operator"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "expression"
-        }
-      ]
-    },
     "macro_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "def"
+          },
+          "named": true,
+          "value": "keyword_identifier"
+        },
         {
           "type": "ALIAS",
           "content": {
@@ -211,6 +168,15 @@
     "macro_function_statement": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "ALIAS",
+          "content": {
+            "type": "PATTERN",
+            "value": "def"
+          },
+          "named": true,
+          "value": "keyword_identifier"
+        },
         {
           "type": "ALIAS",
           "content": {
@@ -1050,11 +1016,7 @@
         },
         {
           "type": "STRING",
-          "value": "ramp1"
-        },
-        {
-          "type": "STRING",
-          "value": "ramp2"
+          "value": "def"
         }
       ]
     },

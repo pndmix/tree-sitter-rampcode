@@ -1,46 +1,18 @@
 ========
-ramp1-statement
-========
-
-ramp1: $v1*8000*4
-
----
-(program
-  (ramp1_statement
-    (keyword_identifier)
-    (expression
-      (binary_operator (binary_operator (signal) (number)) (number)))))
-
-
-========
-ramp2-statement
-========
-
-ramp2: sin(1000 / ($v1%4000)*2)
-
----
-(program
-  (ramp2_statement
-    (keyword_identifier)
-    (expression
-      (call_function
-        (name)
-        (arguments (binary_operator (binary_operator (number) (parenthesized (binary_operator (signal) (number)))) (number)))))))
-
-
-========
 macro-statement
 ========
 
-PI = 3.14159265
-pulse = if($v1<0.5, 1, 0)
+def PI = 3.14159265
+def pulse = if($v1<0.5, 1, 0)
 
 ---
 (program
   (macro_statement
+    (keyword_identifier)
     (name)
     (expression (number)))
   (macro_statement
+    (keyword_identifier)
     (name)
     (expression
       (call_function
@@ -52,12 +24,13 @@ pulse = if($v1<0.5, 1, 0)
 macro-function-statement
 ========
 
-osc(freq, time) = freq * time
+def osc(freq, time) = freq * time
 
 ---
 (program
   (macro_function_statement
+    (keyword_identifier)
     (name)
     (parameters (name) (name))
-  (expression
-    (binary_operator (call_macro (name)) (call_macro (name))))))
+    (expression
+      (binary_operator (call_macro (name)) (call_macro (name))))))

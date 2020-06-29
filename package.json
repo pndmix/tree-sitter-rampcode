@@ -12,12 +12,12 @@
   "author": "Reo Matsumoto",
   "license": "MIT",
   "dependencies": {
-    "nan": "^2.14.0",
-    "prebuild-install": "^5.3.0"
+    "nan": "^2.14.1",
+    "prebuild-install": "^5.3.5"
   },
   "devDependencies": {
-    "prebuild": "^9.0.1",
-    "tree-sitter-cli": "^0.15.7"
+    "prebuild": "^10.0.0",
+    "tree-sitter-cli": "^0.16.8"
   },
   "scripts": {
     "install": "prebuild-install || node-gyp rebuild",

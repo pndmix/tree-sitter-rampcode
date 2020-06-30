@@ -10,14 +10,17 @@ const PREC = {
   times: 9,
   unary: 10,
   parameter: 11,
-  const: 20,
+  constant: 12,
 }
 
-const STATEMENT_KEYWORDS = {
-  hz: 'hz',
-  c: 'c',
-  def: 'def'
+function sep(separator, rule) {
+  return seq(rule, repeat(seq(separator, rule)))
 }
+
+function args(separator, rule) {
+  return seq('(', sep(separator, rule), ')')
+}
+
 
 module.exports = grammar({
   name: "rampcode",
@@ -28,8 +31,7 @@ module.exports = grammar({
   ],
 
   inline: $ => [
-    $._default_statement,
-    $._extended_statement
+    $._statement,
   ],
 
   word: $ => $.identifier,
@@ -37,76 +39,50 @@ module.exports = grammar({
   rules: {
     program: $ => repeat($._statement),
 
-    _statement: $ => seq(
-      choice(
-        $._default_statement,
-        $._extended_statement
-      ),
-      optional($._semicolon)
+    identifier: $ => /[a-zA-Z_]\w*/,
+
+    comment: $ => choice(
+      seq('//', /.*/),
+      seq('/*', repeat(choice(/[^*]/, /\*[^/]/)), '*/')
     ),
 
-    _default_statement: $ => choice(
-      $.hz_statement,
-      $.ramp_statement,
-      $.const_statement
+    _statement: $ => seq(
+      choice(
+        $.hz_statement,
+        $.constant_statement,
+        $.main_statement,
+      ),
+      optional(';')
     ),
 
     hz_statement: $ => seq(
-      alias(reg(STATEMENT_KEYWORDS.hz), $.keyword_identifier),
-      $._keyword_operator,
+      alias('hz', $.keyword_identifier),
+      $.special_parameter,
       $.expression
     ),
 
-    ramp_statement: $ => seq(
-      $.expression,
-      $._keyword_operator,
-      $.expression
-    ),
-
-    const_statement: $ => prec(PREC.const, seq(
-      alias($.value, $.keyword_identifier),
-      $._keyword_operator,
+    constant_statement: $ => prec(PREC.constant, seq(
+      alias('c', $.keyword_identifier),
+      $.special_parameter,
       $.number
     )),
 
-    _extended_statement: $ => choice(
-      $.macro_statement,
-      $.macro_function_statement
-    ),
-
-    macro_statement: $ => seq(
-      alias(reg(STATEMENT_KEYWORDS.def), $.keyword_identifier),
-      alias($.identifier, $.name),
-      '=',
+    main_statement: $ => seq(
+      $.expression,
+      $.special_parameter,
       $.expression
     ),
 
-    macro_function_statement: $ => seq(
-      alias(reg(STATEMENT_KEYWORDS.def), $.keyword_identifier),
-      alias($.identifier, $.name),
-      $.parameters,
-      '=',
-      $.expression
-    ),
-
-    parameters: $ => args($._delimiter, repeat1($._parameter)),
-
-    _parameter: $ => prec(PREC.parameter, alias($.identifier, $.name)),
+    special_parameter: $ => '@',
 
     expression: $ => $._expressions,
 
     _expressions: $ => choice(
-      $.number,
-      $.signal,
-      $.parenthesized,
       $.boolean_operator,
       $.binary_operator,
-      $.unary_operator,
       $.comparison_operator,
-      $.call_function,
-      $.call_macro,
-      $.call_macro_function,
-      $.value
+      $.unary_operator,
+      $._variables,
     ),
 
     boolean_operator: $ => choice(
@@ -127,49 +103,31 @@ module.exports = grammar({
       prec.left(PREC.bitwise_or, seq($._expressions, '|', $._expressions)),
     ),
 
-    unary_operator: $ => {
-      const exprs = choice(
-        $.parenthesized,
-        $.call_function,
-        $.call_macro,
-        $.call_macro_function,
-        $.number,
-        $.signal
-      )
-      return choice(
-        prec(PREC.unary, seq('~', exprs)),
-        prec(PREC.unary, seq('!', exprs)),
-        prec(PREC.unary, seq('-', exprs))
-      )
-    },
+    comparison_operator: $ => choice(
+      prec.left(PREC.compare, seq($._expressions, '<', $._expressions)),
+      prec.left(PREC.compare, seq($._expressions, '<=', $._expressions)),
+      prec.left(PREC.compare, seq($._expressions, '==', $._expressions)),
+      prec.left(PREC.compare, seq($._expressions, '!=', $._expressions)),
+      prec.left(PREC.compare, seq($._expressions, '>=', $._expressions)),
+      prec.left(PREC.compare, seq($._expressions, '>', $._expressions)),
+    ),
 
-    comparison_operator: $ => prec.left(
-      PREC.compare,
-      seq(
-        $._expressions,
-        repeat1(seq(choice('<', '<=', '==', '!=', '>=', '>'), $._expressions))
-      )
+    unary_operator: $ => choice(
+      prec(PREC.unary, seq('~', $._variables)),
+      prec(PREC.unary, seq('!', $._variables)),
+      prec(PREC.unary, seq('-', $._variables))
+    ),
+
+    _variables: $ => choice(
+      $.parenthesized,
+      $.variable,
+      $.number,
+      $.function,
     ),
 
     parenthesized: $ => seq('(', $._expressions, ')'),
 
-    call_function: $ => seq(
-      alias($.function_name, $.name),
-      $.arguments
-    ),
-
-    call_macro: $ => alias($.identifier, $.name),
-
-    call_macro_function: $ => seq(
-      alias($.identifier, $.name),
-      $.arguments
-    ),
-
-    arguments: $ => args($._delimiter, repeat1($._argument)),
-
-    _argument: $ => $._expressions,
-
-    _delimiter: $ => choice(',', '\\,'),
+    variable: $ => choice('$v1', 'c'),
 
     number: $ => {
       const integer = /[0-9]+/
@@ -180,48 +138,18 @@ module.exports = grammar({
         optional(choice('-', '+')),
         integer
       )
-      return token(choice(integer, float, exponent))
+      return choice(integer, float, exponent)
     },
 
-    _keyword_operator: $ => choice(':', '@'),
-
-    _semicolon: $ => ';',
-
-    signal: $ => '$v1',
-
-    function_name: $ => {
-      const base = /(if|int|rint|float|min|max|abs|)/
-      const power = /(pow|sqrt|exp|ln|log|log10|fact|cbrt|expm1|log1p|ldexp)/
-      const trigonometric = /(sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh|floor|ceil|fmod)/
-      return token(choice(base, power, trigonometric))
+    function: $ => {
+      const base = /if|int|rint|float|min|max|abs/
+      const power = /pow|sqrt|exp|ln|log|log10|fact|cbrt|expm1|log1p|ldexp/
+      const trigonometric = /sin|cos|tan|asin|acos|atan|atan2|sinh|cosh|tanh|asinh|acosh|atanh|floor|ceil|fmod/
+      return seq(alias(choice(base, power, trigonometric), $.name), $.arguments)
     },
 
-    value: $ => STATEMENT_KEYWORDS.c,
+    arguments: $ => args($._delimiter, repeat1($._expressions)),
 
-    _keyword_identifier: $ => {
-      const keywords = Object.values(STATEMENT_KEYWORDS)
-      return choice(...keywords)
-    },
-
-    identifier: $ => /[a-zA-Z_][a-zA-Z_0-9]*/,
-
-    comment: $ => token(
-      choice(
-        seq('//', /.*/),
-        seq('/*', repeat(choice(/[^*]/, /\*[^/]/)), '*/')
-      )
-    ),
+    _delimiter: $ => choice(',', '\\,'),
   }
 });
-
-function sep(separator, rule) {
-  return seq(rule, repeat(seq(separator, rule)))
-}
-
-function args(separator, rule) {
-  return seq(token.immediate('('), sep(separator, rule), ')')
-}
-
-function reg(str) {
-  return new RegExp(str)
-}

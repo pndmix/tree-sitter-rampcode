@@ -37,13 +37,41 @@ module.exports = grammar({
   word: $ => $.identifier,
 
   rules: {
-    program: $ => repeat($._statement),
+    program: $ => repeat(
+      choice(
+        $.address_statement,
+        $._statement
+      )
+    ),
 
     identifier: $ => /[a-zA-Z_]\w*/,
 
     comment: $ => choice(
       seq('//', /.*/),
       seq('/*', repeat(choice(/[^*]/, /\*[^/]/)), '*/')
+    ),
+
+    address_statement: $ => seq(
+      $.port,
+      optional(
+        choice(
+          $.host,
+          seq($.host, $.protocol)
+        )
+      ),
+      $.statement_block
+    ),
+
+    port: $ => /[0-9]+/,
+
+    host: $ => /[a-zA-Z0-9][a-zA-Z0-9.-]*/,
+
+    protocol: $ => /tcp|udp/,
+
+    statement_block: $ => seq(
+      '{',
+      optional(repeat($._statement)),
+      '}'
     ),
 
     _statement: $ => seq(

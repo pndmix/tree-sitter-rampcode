@@ -1,5 +1,32 @@
 [
   {
+    "type": "address_statement",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "host",
+          "named": true
+        },
+        {
+          "type": "port",
+          "named": true
+        },
+        {
+          "type": "protocol",
+          "named": true
+        },
+        {
+          "type": "statement_block",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "arguments",
     "named": true,
     "fields": {},
@@ -347,7 +374,39 @@
     }
   },
   {
+    "type": "port",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "program",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "address_statement",
+          "named": true
+        },
+        {
+          "type": "constant_statement",
+          "named": true
+        },
+        {
+          "type": "hz_statement",
+          "named": true
+        },
+        {
+          "type": "main_statement",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "statement_block",
     "named": true,
     "fields": {},
     "children": {
@@ -518,6 +577,10 @@
     "named": false
   },
   {
+    "type": "host",
+    "named": true
+  },
+  {
     "type": "keyword_identifier",
     "named": true
   },
@@ -526,8 +589,16 @@
     "named": true
   },
   {
+    "type": "protocol",
+    "named": true
+  },
+  {
     "type": "special_parameter",
     "named": true
+  },
+  {
+    "type": "{",
+    "named": false
   },
   {
     "type": "|",
@@ -535,6 +606,10 @@
   },
   {
     "type": "||",
+    "named": false
+  },
+  {
+    "type": "}",
     "named": false
   },
   {

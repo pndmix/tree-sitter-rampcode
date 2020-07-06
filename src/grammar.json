@@ -5,8 +5,17 @@
     "program": {
       "type": "REPEAT",
       "content": {
-        "type": "SYMBOL",
-        "name": "_statement"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "address_statement"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        ]
       }
     },
     "identifier": {
@@ -57,6 +66,89 @@
               "value": "*/"
             }
           ]
+        }
+      ]
+    },
+    "address_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "port"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "host"
+                },
+                {
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "host"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "protocol"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "statement_block"
+        }
+      ]
+    },
+    "port": {
+      "type": "PATTERN",
+      "value": "[0-9]+"
+    },
+    "host": {
+      "type": "PATTERN",
+      "value": "[a-zA-Z0-9][a-zA-Z0-9.-]*"
+    },
+    "protocol": {
+      "type": "PATTERN",
+      "value": "tcp|udp"
+    },
+    "statement_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "{"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_statement"
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "}"
         }
       ]
     },

@@ -16,28 +16,28 @@ This is a comment.
 hz-statement
 ========
 
-hz @ 1 / 4
+hz @ 1 / 4;
 
 ---
-(program 
+(program
   (hz_statement
-    (keyword_identifier)
-    (expression (binary_operator (number) (number)))))
+    (keyword_identifier) (special_parameter) (expression (binary_operator (number) (number)))))
 
 
 ========
-const-statement
+constant-statement
 ========
 
 c @ 8000;
 
 ---
 (program
-  (const_statement (keyword_identifier) (number)))
+  (constant_statement
+    (keyword_identifier) (special_parameter) (number)))
 
 
 ========
-ramp-statement
+main-statement
 ========
 
 $v1 * c @ sin($v1)
@@ -45,32 +45,32 @@ c * $v1 @ sin($v1)
 
 ---
 (program
-  (ramp_statement
-    (expression
-      (binary_operator (signal) (value)))
-    (expression
-      (call_function (name) (arguments (signal)))))
-  (ramp_statement
-    (expression
-      (binary_operator (value) (signal)))
-    (expression
-      (call_function (name) (arguments (signal)))))
-)
+  (main_statement
+    (expression (binary_operator (variable) (variable)))
+    (special_parameter)
+    (expression (function (name) (arguments (variable)))))
+  (main_statement
+    (expression (binary_operator (variable) (variable)))
+    (special_parameter)
+    (expression (function (name) (arguments (variable))))))
 
 
 ========
-one-liner
+address-statement
 ========
 
-hz @ 1/4 $v1 * 8000 @ sin($v1)
+8080 localhost tcp {
+    hz @ 1 /4
+    $v1 * 8000 @ sin($v1)
+}
 
 ---
 (program
-  (hz_statement
-    (keyword_identifier)
-    (expression (binary_operator (number) (number))))
-  (ramp_statement
-    (expression
-      (binary_operator (signal) (number)))
-    (expression
-      (call_function (name) (arguments (signal))))))
+  (address_statement (port) (host) (protocol)
+    (statement_block
+      (hz_statement
+        (keyword_identifier) (special_parameter) (expression (binary_operator (number) (number))))
+      (main_statement
+        (expression (binary_operator (variable) (number)))
+        (special_parameter)
+        (expression (function (name) (arguments (variable))))))))

@@ -10,9 +10,10 @@ env:
 matrix:
   include:
     - os: osx
-      osx_image: xcode9.2
     - os: linux
-      env: CXX=clang++
+      env:
+        - CC=clang
+        - CXX=clang++
 
 branches:
   only:

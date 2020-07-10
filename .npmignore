@@ -7,3 +7,5 @@ corpus
 .appveyor.yml
 .travis.yml
 .gitattributes
+
+.idea
